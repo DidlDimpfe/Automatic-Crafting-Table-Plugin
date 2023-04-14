@@ -15,7 +15,7 @@ public class CraftingTableEditUI {
     public CraftingTableEditUI(Player player, CraftingTableManager craftingTableManager, Block craftingTable) {
         Inventory inventory = Bukkit.createInventory(null, 27, ChatColor.AQUA + "Automatic Workbench Recipe");
 
-        for (int i: new int[]{0 ,1, 2, 6, 7, 8, 9, 10, 11, 15, 16, 17, 18, 19, 20, 24, 25, 26}) {
+        for (int i : new int[]{0, 1, 2, 6, 7, 8, 9, 10, 11, 15, 16, 17, 18, 19, 20, 24, 25, 26}) {
             ItemStack itemStack = new ItemStack(Material.BLACK_STAINED_GLASS_PANE);
             ItemMeta itemMeta = itemStack.getItemMeta();
             itemMeta.setLocalizedName(craftingTableManager.getSavedLocation(craftingTable.getLocation()));

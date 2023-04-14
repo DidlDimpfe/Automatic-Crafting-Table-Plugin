@@ -7,14 +7,13 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
-import org.bukkit.event.inventory.InventoryInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
 public class CraftingTableEditUIListener implements Listener {
 
-    private AutomaticCraftingTable automaticCraftingTable;
+    private final AutomaticCraftingTable automaticCraftingTable;
 
-    public CraftingTableEditUIListener (AutomaticCraftingTable automaticCraftingTable) {
+    public CraftingTableEditUIListener(AutomaticCraftingTable automaticCraftingTable) {
         this.automaticCraftingTable = automaticCraftingTable;
     }
 
@@ -54,7 +53,6 @@ public class CraftingTableEditUIListener implements Listener {
                     itemStack);
         }
         automaticCraftingTable.getCraftingTableManager().saveCraftingTables();
-
     }
 
 

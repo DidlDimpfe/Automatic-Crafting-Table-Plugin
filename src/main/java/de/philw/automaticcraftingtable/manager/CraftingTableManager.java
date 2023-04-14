@@ -2,24 +2,23 @@ package de.philw.automaticcraftingtable.manager;
 
 import de.philw.automaticcraftingtable.AutomaticCraftingTable;
 import de.philw.automaticcraftingtable.util.ItemStackSerializer;
+import de.philw.automaticcraftingtable.util.StackItems;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.material.MaterialData;
+import org.checkerframework.checker.units.qual.A;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class CraftingTableManager {
 
-    private AutomaticCraftingTable automaticCraftingTable;
-    private File file;
-    private YamlConfiguration craftingTables;
+    private final AutomaticCraftingTable automaticCraftingTable;
+    private final File file;
+    private final YamlConfiguration craftingTables;
 
     public CraftingTableManager(AutomaticCraftingTable automaticCraftingTable) {
         this.automaticCraftingTable = automaticCraftingTable;
@@ -55,7 +54,8 @@ public class CraftingTableManager {
     }
 
     public void addItemToIndex(Location location, int index, ItemStack itemStack) {
-        craftingTables.set(getSavedLocation(location) + "." + index, itemStack != null ? ItemStackSerializer.serialize(itemStack) : "null");
+        craftingTables.set(getSavedLocation(location) + "." + index, itemStack != null ?
+                ItemStackSerializer.serialize(itemStack) : "null");
     }
 
     public void addEmptyCraftingTable(Location location) {
@@ -102,6 +102,21 @@ public class CraftingTableManager {
             return i - 15;
         }
         return 0;
+    }
+
+    public ArrayList<ItemStack> getItemsInCraftingTable(Location location) {
+        ArrayList<ItemStack> itemsInCraftingTable = new ArrayList<>();
+        for (int i = 0; i<9; i++) {
+            itemsInCraftingTable.add(getItemFromIndex(location, i));
+        }
+        return StackItems.combine(itemsInCraftingTable);
+    }
+
+    public void removeWorkbench(Location location) {
+        for (int i = 0; i<9; i++) {
+            craftingTables.set(getSavedLocation(location) + "." + i, null);
+        }
+        craftingTables.set(getSavedLocation(location), null);
     }
 
 }
