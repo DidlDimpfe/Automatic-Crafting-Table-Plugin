@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="AutomaticCraftingTable:jar">
+    <output-path>$PROJECT_DIR$/../../Minecraft Server/AutomaticCraftingTable/plugins</output-path>
+    <root id="archive" name="AutomaticCraftingTable.jar">
+      <element id="module-output" name="AutomaticCraftingTable" />
+    </root>
+  </artifact>
+</component>
