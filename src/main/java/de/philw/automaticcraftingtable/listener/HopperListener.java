@@ -9,9 +9,9 @@ import org.bukkit.block.Block;
 import org.bukkit.block.Hopper;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.InventoryMoveItemEvent;
-import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.event.inventory.*;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.scheduler.BukkitTask;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,9 +25,18 @@ public class HopperListener implements Listener {
         this.automaticCraftingTable = automaticCraftingTable;
     }
 
+    public BukkitTask bukkitTask () {
+
+        return bukkitTask();
+    }
+
+    /**
+     * This is the
+     * @param inventoryMoveItemEvent
+     */
     @EventHandler
     public void onDropperSwitch(InventoryMoveItemEvent inventoryMoveItemEvent) {
-        if (!(Objects.requireNonNull(Objects.requireNonNull(inventoryMoveItemEvent.getInitiator().getLocation()).getWorld()).getBlockAt(Objects.requireNonNull(inventoryMoveItemEvent.getDestination().getLocation())).getState() instanceof Hopper)) {
+        if (!(inventoryMoveItemEvent.getInitiator().getLocation().getWorld().getBlockAt(Objects.requireNonNull(inventoryMoveItemEvent.getDestination().getLocation())).getState() instanceof Hopper)) {
             return;
         }
         if (hopperIsFull((Hopper) inventoryMoveItemEvent.getInitiator().getLocation().getWorld().getBlockAt(inventoryMoveItemEvent.getDestination().getLocation()).getState(), inventoryMoveItemEvent.getItem())) {
@@ -117,6 +126,14 @@ public class HopperListener implements Listener {
             }
         }, 4);
 
+    }
+
+    int i = 0;
+
+    @EventHandler
+    public void onHopperAddItem(InventoryInteractEvent inventoryClickEvent) {
+        System.out.println("Fired" + i);
+        i++;
     }
 
     /**

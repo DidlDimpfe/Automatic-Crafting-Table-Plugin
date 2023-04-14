@@ -54,7 +54,6 @@ public class CraftingTableRightClickListener implements Listener {
         if (!craftingTableManager.isCraftingTableRegistered(craftingTable.getLocation())) {
             craftingTableManager.addEmptyCraftingTable(craftingTable.getLocation());
             craftingTableManager.saveCraftingTables();
-            System.out.println("d");
         }
 
         new CraftingTableEditUI(player, craftingTableManager, craftingTable);

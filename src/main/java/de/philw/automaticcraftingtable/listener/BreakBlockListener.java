@@ -34,6 +34,7 @@ public class BreakBlockListener implements Listener {
         }
 
         craftingTableManager.removeWorkbench(craftingTable.getLocation());
+        craftingTableManager.saveCraftingTables();
 
     }
 

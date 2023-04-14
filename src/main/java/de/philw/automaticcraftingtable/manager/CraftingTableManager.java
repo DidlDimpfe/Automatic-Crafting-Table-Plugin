@@ -13,6 +13,7 @@ import org.checkerframework.checker.units.qual.A;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Set;
 
 public class CraftingTableManager {
 
@@ -28,6 +29,7 @@ public class CraftingTableManager {
         }
 
         this.file = new File(automaticCraftingTable.getDataFolder(), "craftingTables.yml");
+        System.out.println(file.getAbsolutePath());
 
         if (!file.exists()) {
             try {
@@ -117,6 +119,10 @@ public class CraftingTableManager {
             craftingTables.set(getSavedLocation(location) + "." + i, null);
         }
         craftingTables.set(getSavedLocation(location), null);
+    }
+
+    public Set<String> getLocations () {
+        return craftingTables.getConfigurationSection("").getKeys(false);
     }
 
 }

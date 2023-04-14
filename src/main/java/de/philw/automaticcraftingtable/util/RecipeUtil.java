@@ -1,6 +1,7 @@
 package de.philw.automaticcraftingtable.util;
 
 import de.philw.automaticcraftingtable.AutomaticCraftingTable;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.inventory.*;
@@ -29,8 +30,11 @@ public class RecipeUtil {
     private final Map<List<ItemStack>, ItemStack> cache = new HashMap<>();
 
     public ItemStack getCraftResult(List<ItemStack> items) {
-        if (cache.containsKey(items))
+        if (cache.containsKey(items)) {
+            recipe = Bukkit.getRecipesFor(cache.get(items)).get(0); // This is because we later need to get the recipe for the item but when a
+            // false recipe is in cache for example because another crafting table the recipe still gets updated
             return cache.get(items);
+        }
 
         if (items.size() != 9) { // list correct?
             return null;
@@ -197,12 +201,18 @@ public class RecipeUtil {
             }
             ArrayList<ItemStack> ingredientList = new ArrayList<>();
             ShapedRecipe shapedRecipe = (ShapedRecipe) recipe;
-            for (var entry : shapedRecipe.getIngredientMap().entrySet()) {
-                int index = letterToAlphabetPos(entry.getKey()) - 1;
-                if (automaticCraftingTable.getCraftingTableManager().getItemFromIndex(location, index) != null) {
+            Map<Character, ItemStack> ingredientMap = shapedRecipe.getIngredientMap();
+            int itemInRecipe = 1;
+            for (int i = 0; i < 9; i++) {
+                if (automaticCraftingTable.getCraftingTableManager().getItemFromIndex(location, i) != null) {
                     ItemStack itemStack = automaticCraftingTable.getCraftingTableManager().getItemFromIndex(location,
-                            index);
-                    itemStack.setAmount(entry.getValue().getAmount());
+                            i);
+                    if (ingredientMap.get(Objects.requireNonNull(getCharForNumber(itemInRecipe)).toLowerCase().toCharArray()[0]) != null) {
+                        itemStack.setAmount(ingredientMap.get(Objects.requireNonNull(getCharForNumber(itemInRecipe)).toLowerCase().toCharArray()[0]).getAmount());
+                    } else {
+                        itemStack.setAmount(ingredientMap.get(Objects.requireNonNull(getCharForNumber(i + 1)).toLowerCase().toCharArray()[0]).getAmount());
+                    }
+                    itemInRecipe++;
                     ingredientList.add(itemStack);
                 }
             }
@@ -212,7 +222,7 @@ public class RecipeUtil {
         }
     }
 
-    private int letterToAlphabetPos(char letter) {
-        return Character.toUpperCase(letter) - 64;
+    private String getCharForNumber(int i) {
+        return i > 0 && i < 27 ? String.valueOf((char)(i + 64)) : null;
     }
 }

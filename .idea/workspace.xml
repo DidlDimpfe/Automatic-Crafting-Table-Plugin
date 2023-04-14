@@ -10,7 +10,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c18f7852-c609-46b7-ac96-166f3b4173ef" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/de/philw/automaticcraftingtable/listener/CheckHopperTask.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/philw/automaticcraftingtable/AutomaticCraftingTable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/philw/automaticcraftingtable/AutomaticCraftingTable.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/philw/automaticcraftingtable/listener/BreakBlockListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/philw/automaticcraftingtable/listener/BreakBlockListener.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/de/philw/automaticcraftingtable/listener/CraftingTableRightClickListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/philw/automaticcraftingtable/listener/CraftingTableRightClickListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/philw/automaticcraftingtable/listener/HopperListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/philw/automaticcraftingtable/listener/HopperListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/philw/automaticcraftingtable/manager/CraftingTableManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/philw/automaticcraftingtable/manager/CraftingTableManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/philw/automaticcraftingtable/util/RecipeUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/philw/automaticcraftingtable/util/RecipeUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/automaticcraftingtable-1.0-SNAPSHOT.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/de/philw/automaticcraftingtable/AutomaticCraftingTable.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/de/philw/automaticcraftingtable/AutomaticCraftingTable.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/de/philw/automaticcraftingtable/listener/BreakBlockListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/de/philw/automaticcraftingtable/listener/BreakBlockListener.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/de/philw/automaticcraftingtable/listener/HopperListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/de/philw/automaticcraftingtable/listener/HopperListener.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/de/philw/automaticcraftingtable/manager/CraftingTableManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/de/philw/automaticcraftingtable/manager/CraftingTableManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/de/philw/automaticcraftingtable/util/RecipeUtil.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/de/philw/automaticcraftingtable/util/RecipeUtil.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/original-automaticcraftingtable-1.0-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/original-automaticcraftingtable-1.0-SNAPSHOT.jar" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -162,15 +176,11 @@
     </option>
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/de/philw/automaticcraftingtable/listener/HopperListener.java</url>
-          <line>83</line>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <watches-manager>
+      <configuration name="JarApplication">
+        <watch expression="cacheIngredientList" language="JAVA" />
+      </configuration>
+    </watches-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/AutomaticCraftingTable$Start.ic" NAME="Start Coverage Results" MODIFIED="1681420175325" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
