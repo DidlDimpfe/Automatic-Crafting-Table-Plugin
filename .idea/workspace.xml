@@ -9,7 +9,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c18f7852-c609-46b7-ac96-166f3b4173ef" name="Changes" comment="" />
+    <list default="true" id="c18f7852-c609-46b7-ac96-166f3b4173ef" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/philw/automaticcraftingtable/listener/CraftingTableRightClickListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/philw/automaticcraftingtable/listener/CraftingTableRightClickListener.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -45,16 +47,22 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;TODO_SCOPE&quot;: &quot;All Places&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "TODO_SCOPE": "All Places",
+    "last_opened_file_path": "C:/Users/philw/Desktop/Alles/IntellIJProjekte/AutomaticCraftingTable",
+    "project.structure.last.edited": "Artifacts",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2"
   }
-}</component>
+}]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\philw\Desktop\Alles\IntellIJProjekte\AutomaticCraftingTable\src\main\java\de\philw\automaticcraftingtable\manager" />
+    </key>
+  </component>
   <component name="RunManager" selected="JAR Application.Start">
     <configuration name="Start" type="JarApplication">
       <option name="JAR_PATH" value="$PROJECT_DIR$/../../Minecraft Server/AutomaticCraftingTable/spigot.jar" />
