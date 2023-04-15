@@ -20,6 +20,10 @@ public class CraftingTableRightClickListener implements Listener {
         this.automaticCraftingTable = automaticCraftingTable;
     }
 
+    /**
+     * This method opens the crafting table edit ui, when a player sneaks and left clicks to a crafting table.
+     */
+
     @EventHandler
     public void onCraftingTableConfigRequested(PlayerInteractEvent playerInteractEvent) {
 
@@ -51,7 +55,7 @@ public class CraftingTableRightClickListener implements Listener {
         playerInteractEvent.setCancelled(true);
 
         CraftingTableManager craftingTableManager = automaticCraftingTable.getCraftingTableManager();
-        if (!craftingTableManager.isCraftingTableRegistered(craftingTable.getLocation())) {
+        if (craftingTableManager.isCraftingTableNotRegistered(craftingTable.getLocation())) {
             craftingTableManager.addEmptyCraftingTable(craftingTable.getLocation());
             craftingTableManager.saveCraftingTables();
         }

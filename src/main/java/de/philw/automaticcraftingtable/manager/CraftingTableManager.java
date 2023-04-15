@@ -8,28 +8,29 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.ItemStack;
-import org.checkerframework.checker.units.qual.A;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Set;
 
 public class CraftingTableManager {
 
-    private final AutomaticCraftingTable automaticCraftingTable;
     private final File file;
     private final YamlConfiguration craftingTables;
 
+    /**
+     * The constructor of the class will connect to craftingTables.yml or create it.
+     */
+
     public CraftingTableManager(AutomaticCraftingTable automaticCraftingTable) {
-        this.automaticCraftingTable = automaticCraftingTable;
 
         if (!automaticCraftingTable.getDataFolder().exists()) {
             automaticCraftingTable.getDataFolder().mkdir();
         }
 
         this.file = new File(automaticCraftingTable.getDataFolder(), "craftingTables.yml");
-        System.out.println(file.getAbsolutePath());
 
         if (!file.exists()) {
             try {
@@ -42,6 +43,10 @@ public class CraftingTableManager {
         craftingTables = YamlConfiguration.loadConfiguration(file);
     }
 
+    /**
+     * This method saves all changes on craftingTables to the file
+     */
+
     public void saveCraftingTables() {
         try {
             craftingTables.save(file);
@@ -50,30 +55,62 @@ public class CraftingTableManager {
         }
     }
 
+    /**
+     * This method gets you the Item from a specific craftingTable at a specific index
+     * @param location The location of which crafting table you want the info from
+     * @param index The index of the item you want to have (0-8)
+     * @return The item from the workbench at the location and at the index from the index
+     */
+
     public ItemStack getItemFromIndex(Location location, int index) {
-        return craftingTables.getString(getSavedLocation(location) + "." + index).equals("null") ? null :
-                ItemStackSerializer.deserialize(craftingTables.getString(getSavedLocation(location) + "." + index));
+        return Objects.equals(craftingTables.getString(getSavedLocation(location) + "." + index), "null") ? null :
+                ItemStackSerializer.deserialize(Objects.requireNonNull(craftingTables.getString(getSavedLocation(location) + "." + index)));
     }
 
-    public void addItemToIndex(Location location, int index, ItemStack itemStack) {
+    /**
+     * This method set the item from a specific craftingTable at a specific index to the wanted item.
+     * @param location The location of which crafting table you want to change from
+     * @param index The index of the item you want to set (0-8)
+     * @param itemStack The item you want to set
+     */
+
+    public void setItemToIndex(Location location, int index, ItemStack itemStack) {
         craftingTables.set(getSavedLocation(location) + "." + index, itemStack != null ?
                 ItemStackSerializer.serialize(itemStack) : "null");
     }
 
-    public void addEmptyCraftingTable(Location location) {
+    /**
+     * This method adds a crafting table to the craftingTables.yml file.
+     * @param location The location where the crafting table is
+     */
 
+    public void addEmptyCraftingTable(Location location) {
         for (int i = 0; i < 9; i++) {
             craftingTables.set(getSavedLocation(location) + "." + i, "null");
         }
     }
 
-    public boolean isCraftingTableRegistered(Location location) {
-        return craftingTables.getString(getSavedLocation(location) + ".0") != null;
+    /**
+     * This method return true if a craftingTable is not registered and false if it is.
+     * @param location The location where the crafting table is
+     */
+
+    public boolean isCraftingTableNotRegistered(Location location) {
+        return craftingTables.getString(getSavedLocation(location) + ".0") == null;
     }
 
+    /**
+     * This method converts a location to a String how the location is stored in the craftingTables.yml file.
+     * @param location The location you want to convert
+     */
     public String getSavedLocation(Location location) {
-        return location.getWorld().getName() + "," + (int) location.getX() + "," + (int) location.getY() + "," + (int) location.getZ();
+        return Objects.requireNonNull(location.getWorld()).getName() + "," + (int) location.getX() + "," + (int) location.getY() + "," + (int) location.getZ();
     }
+
+    /**
+     * This method converts a String how the location is stored in the craftingTables.yml file to a real location.
+     * @param string The string you want to convert
+     */
 
     public Location getLocationFromSavedString(String string) {
         String[] strings = string.split(",");
@@ -83,6 +120,10 @@ public class CraftingTableManager {
         int z = Integer.parseInt(strings[3]);
         return new Location(world, x, y, z);
     }
+
+    /**
+     * This method converts the index from a 0-8 inventory to a 0-27 inventory.
+     */
 
     public int castFromSmallInventoryToBigInventory(int i) {
         if (i >= 0 && i <= 2) {
@@ -95,6 +136,10 @@ public class CraftingTableManager {
         return 0;
     }
 
+    /**
+     * This method converts the index from a 0-27 inventory to a 0-8 inventory.
+     */
+
     public int castFromBigInventoryToSmallInventory(int i) {
         if (i >= 3 && i <= 5) {
             return i - 3;
@@ -106,6 +151,11 @@ public class CraftingTableManager {
         return 0;
     }
 
+    /**
+     * This method returns all Items stacked from a crafting table.
+     * @param location The location where the craftingTable is.
+     */
+
     public ArrayList<ItemStack> getItemsInCraftingTable(Location location) {
         ArrayList<ItemStack> itemsInCraftingTable = new ArrayList<>();
         for (int i = 0; i<9; i++) {
@@ -114,15 +164,24 @@ public class CraftingTableManager {
         return StackItems.combine(itemsInCraftingTable);
     }
 
-    public void removeWorkbench(Location location) {
+    /**
+     * This method removes all the info from a crafting in the craftingTables.yml
+     * @param location
+     */
+
+    public void removeCraftingTable(Location location) {
         for (int i = 0; i<9; i++) {
             craftingTables.set(getSavedLocation(location) + "." + i, null);
         }
         craftingTables.set(getSavedLocation(location), null);
     }
 
+    /**
+     * This method returns all locations from registered crafting tables.
+     */
+
     public Set<String> getLocations () {
-        return craftingTables.getConfigurationSection("").getKeys(false);
+        return Objects.requireNonNull(craftingTables.getConfigurationSection("")).getKeys(false);
     }
 
 }

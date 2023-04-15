@@ -12,6 +12,12 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class CraftingTableEditUI {
 
+    /**
+     * The constructor opens the crafting table edit inventory
+     * @param player The player who wants to open it
+     * @param craftingTable The crafting table the player want to open.
+     */
+
     public CraftingTableEditUI(Player player, CraftingTableManager craftingTableManager, Block craftingTable) {
         Inventory inventory = Bukkit.createInventory(null, 27, ChatColor.AQUA + "Automatic Workbench Recipe");
 
@@ -19,6 +25,7 @@ public class CraftingTableEditUI {
             ItemStack itemStack = new ItemStack(Material.BLACK_STAINED_GLASS_PANE);
             ItemMeta itemMeta = itemStack.getItemMeta();
             itemMeta.setLocalizedName(craftingTableManager.getSavedLocation(craftingTable.getLocation()));
+            itemMeta.setDisplayName("Space");
             itemStack.setItemMeta(itemMeta);
             inventory.setItem(i, itemStack);
         }

@@ -9,6 +9,8 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.Objects;
+
 public class CraftingTableEditUIListener implements Listener {
 
     private final AutomaticCraftingTable automaticCraftingTable;
@@ -17,8 +19,12 @@ public class CraftingTableEditUIListener implements Listener {
         this.automaticCraftingTable = automaticCraftingTable;
     }
 
+    /**
+     * This method will cancel the inventory click event, if the player clicks on a space block.
+     */
+
     @EventHandler
-    public void onCraftingTableEditUIListenerClicked(InventoryClickEvent inventoryClickEvent) {
+    public void onCraftingTableEditUIGlassPaneClicked(InventoryClickEvent inventoryClickEvent) {
         if (inventoryClickEvent.getClickedInventory() == null) {
             return;
         }
@@ -30,14 +36,16 @@ public class CraftingTableEditUIListener implements Listener {
         }
         if (inventoryClickEvent.getCurrentItem() != null) {
             ItemStack itemStack = inventoryClickEvent.getCurrentItem();
-
-
-            if (itemStack.getType() == Material.BLACK_STAINED_GLASS_PANE) {
+            if (itemStack.getType() == Material.BLACK_STAINED_GLASS_PANE &&
+                    Objects.requireNonNull(itemStack.getItemMeta()).getDisplayName().equals("Space")) {
                 inventoryClickEvent.setCancelled(true);
             }
-
         }
     }
+
+    /**
+     * This method saves all the inventory changes a player made on a crafting table in craftingTables.yml.
+     */
 
     @EventHandler
     public void onInventoryClose(InventoryCloseEvent inventoryCloseEvent) {
@@ -47,8 +55,10 @@ public class CraftingTableEditUIListener implements Listener {
         for (int i : new int[]{3, 4, 5, 12, 13, 14, 21, 22, 23}) {
             ItemStack itemStack = inventoryCloseEvent.getInventory().getItem(i);
             Location location =
-                    automaticCraftingTable.getCraftingTableManager().getLocationFromSavedString(inventoryCloseEvent.getInventory().getItem(0).getItemMeta().getLocalizedName());
-            automaticCraftingTable.getCraftingTableManager().addItemToIndex(location,
+                    automaticCraftingTable.getCraftingTableManager().getLocationFromSavedString(
+                            Objects.requireNonNull(Objects.requireNonNull(inventoryCloseEvent.getInventory().getItem(0)).
+                                    getItemMeta()).getLocalizedName());
+            automaticCraftingTable.getCraftingTableManager().setItemToIndex(location,
                     automaticCraftingTable.getCraftingTableManager().castFromBigInventoryToSmallInventory(i),
                     itemStack);
         }

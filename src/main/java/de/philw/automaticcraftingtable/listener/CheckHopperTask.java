@@ -23,6 +23,12 @@ public class CheckHopperTask implements Runnable {
         this.craftingTableManager = automaticCraftingTable.getCraftingTableManager();
     }
 
+    /**
+     * The run method is the "main" method of the plugin. It checks every registered crafting table and when
+     * there is a hopper connected, who has enough items for the wanted recipe in it the crafting table gives the
+     * wanted item to the next connected hopper.
+     */
+
     @Override
     public void run() {
         for (String string: automaticCraftingTable.getCraftingTableManager().getLocations()) {
@@ -40,7 +46,7 @@ public class CheckHopperTask implements Runnable {
                 }
 
                 CraftingTableManager craftingTableManager = automaticCraftingTable.getCraftingTableManager();
-                if (!craftingTableManager.isCraftingTableRegistered(craftingTable.getLocation())) {
+                if (craftingTableManager.isCraftingTableNotRegistered(craftingTable.getLocation())) {
                     craftingTableManager.addEmptyCraftingTable(craftingTable.getLocation());
                     craftingTableManager.saveCraftingTables();
                 }
