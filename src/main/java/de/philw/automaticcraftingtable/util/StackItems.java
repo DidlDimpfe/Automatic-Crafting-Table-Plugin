@@ -7,6 +7,10 @@ import java.util.List;
 
 public class StackItems {
 
+    /**
+     * This method returns the same items, but stacked if possible
+     */
+
     public static ArrayList<ItemStack> combine(List<ItemStack> items) {
         ArrayList<ItemStack> sorted = new ArrayList<>();
         for (ItemStack item : items) {

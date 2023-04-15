@@ -17,6 +17,10 @@ public class RecipeUtil {
         this.automaticCraftingTable = automaticCraftingTable;
     }
 
+    /**
+     * This method returns all registered recipes.
+     */
+
     public ArrayList<Recipe> getRecipes() {
         ArrayList<Recipe> recipes = new ArrayList<>();
         Iterator<Recipe> it = automaticCraftingTable.getServer().recipeIterator();
@@ -28,6 +32,11 @@ public class RecipeUtil {
     }
 
     private final Map<List<ItemStack>, ItemStack> cache = new HashMap<>();
+
+    /**
+     * This method returns am Item from a crafting recipe or null
+     * @param items The items from the recipe
+     */
 
     public ItemStack getCraftResult(List<ItemStack> items) {
         if (cache.containsKey(items)) {
@@ -191,6 +200,11 @@ public class RecipeUtil {
 
     private Recipe cacheRecipe;
     private ArrayList<ItemStack> cacheIngredientList;
+
+    /**
+     * This method returns the ingredients from the recipe in the workbench. Unnecessary items in the workbench will be filtered.
+     * @param location The location from the workbench
+     */
 
     public ArrayList<ItemStack> getIngredientList(Location location) {
         if (recipe instanceof ShapelessRecipe) {
