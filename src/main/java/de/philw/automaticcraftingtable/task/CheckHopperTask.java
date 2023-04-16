@@ -1,4 +1,4 @@
-package de.philw.automaticcraftingtable.listener;
+package de.philw.automaticcraftingtable.task;
 
 import de.philw.automaticcraftingtable.AutomaticCraftingTable;
 import de.philw.automaticcraftingtable.manager.CraftingTableManager;
