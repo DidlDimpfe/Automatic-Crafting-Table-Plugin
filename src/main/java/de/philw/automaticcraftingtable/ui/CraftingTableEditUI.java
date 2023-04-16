@@ -15,27 +15,34 @@ public class CraftingTableEditUI {
 
     /**
      * The constructor opens the crafting table edit inventory
-     * @param player The player who wants to open it
+     *
+     * @param player        The player who wants to open it
      * @param craftingTable The crafting table the player want to open.
      */
 
-    public CraftingTableEditUI(Player player, CraftingTableManager craftingTableManager, Block craftingTable) {
+    public CraftingTableEditUI(Player player, CraftingTableManager craftingTableManager, Block craftingTable,
+                               boolean registered) {
         Inventory inventory = Bukkit.createInventory(null, 27,
                 ChatColor.translateAlternateColorCodes('&', ConfigManager.getCraftingTableDisplay()));
 
-        for (int i : new int[]{0, 1, 2, 6, 7, 8, 9, 10, 11, 15, 16, 17, 18, 19, 20, 24, 25, 26}) {
+
+        for (int spaceIndex : new int[]{0, 1, 2, 6, 7, 8, 9, 10, 11, 15, 16, 17, 18, 19, 20, 24, 25, 26}) {
             ItemStack itemStack = new ItemStack(Material.BLACK_STAINED_GLASS_PANE);
             ItemMeta itemMeta = itemStack.getItemMeta();
             itemMeta.setLocalizedName(craftingTableManager.getSavedLocation(craftingTable.getLocation()));
             itemMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', ConfigManager.getSpaceDisplay()));
             itemStack.setItemMeta(itemMeta);
-            inventory.setItem(i, itemStack);
+            inventory.setItem(spaceIndex, itemStack);
         }
 
-        for (int i = 0; i < 9; i++) {
-            if (craftingTableManager.getItemFromIndex(craftingTable.getLocation(), i) != null) {
-                ItemStack itemStack = craftingTableManager.getItemFromIndex(craftingTable.getLocation(), i);
-                inventory.setItem(craftingTableManager.castFromSmallInventoryToBigInventory(i), itemStack);
+        if (registered) {
+            for (int smallInventoryIndex = 0; smallInventoryIndex < 9; smallInventoryIndex++) {
+                if (craftingTableManager.getItemFromIndex(craftingTable.getLocation(), smallInventoryIndex) != null) {
+                    ItemStack itemStack = craftingTableManager.getItemFromIndex(craftingTable.getLocation(),
+                            smallInventoryIndex);
+                    inventory.setItem(craftingTableManager.castFromSmallInventoryToBigInventory(smallInventoryIndex),
+                            itemStack);
+                }
             }
         }
         player.openInventory(inventory);

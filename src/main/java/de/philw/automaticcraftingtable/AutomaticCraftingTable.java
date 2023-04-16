@@ -1,6 +1,9 @@
 package de.philw.automaticcraftingtable;
 
-import de.philw.automaticcraftingtable.listener.*;
+import de.philw.automaticcraftingtable.listener.BreakBlockListener;
+import de.philw.automaticcraftingtable.listener.CheckHopperTask;
+import de.philw.automaticcraftingtable.listener.CraftingTableEditUIListener;
+import de.philw.automaticcraftingtable.listener.CraftingTableRightClickListener;
 import de.philw.automaticcraftingtable.manager.ConfigManager;
 import de.philw.automaticcraftingtable.manager.CraftingTableManager;
 import de.philw.automaticcraftingtable.util.RecipeUtil;

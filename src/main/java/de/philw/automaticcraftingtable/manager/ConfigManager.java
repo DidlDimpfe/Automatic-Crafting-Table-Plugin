@@ -9,6 +9,7 @@ public class ConfigManager {
 
     /**
      * This method creates a config and saves the default values from it.
+     *
      * @param automaticCraftingTable
      */
 

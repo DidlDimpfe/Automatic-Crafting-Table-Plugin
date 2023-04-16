@@ -36,7 +36,7 @@ public class CraftingTableManager {
             try {
                 file.createNewFile();
             } catch (IOException e) {
-                System.out.println("Could not load file craftingTables.yml");
+                System.err.println("Could not load file craftingTables.yml");
             }
         }
 
@@ -51,14 +51,15 @@ public class CraftingTableManager {
         try {
             craftingTables.save(file);
         } catch (IOException e) {
-            System.out.println("Could not save craftingTables.yml");
+            System.err.println("Could not save craftingTables.yml");
         }
     }
 
     /**
      * This method gets you the Item from a specific craftingTable at a specific index
+     *
      * @param location The location of which crafting table you want the info from
-     * @param index The index of the item you want to have (0-8)
+     * @param index    The index of the item you want to have (0-8)
      * @return The item from the workbench at the location and at the index from the index
      */
 
@@ -69,8 +70,9 @@ public class CraftingTableManager {
 
     /**
      * This method set the item from a specific craftingTable at a specific index to the wanted item.
-     * @param location The location of which crafting table you want to change from
-     * @param index The index of the item you want to set (0-8)
+     *
+     * @param location  The location of which crafting table you want to change from
+     * @param index     The index of the item you want to set (0-8)
      * @param itemStack The item you want to set
      */
 
@@ -81,6 +83,7 @@ public class CraftingTableManager {
 
     /**
      * This method adds a crafting table to the craftingTables.yml file.
+     *
      * @param location The location where the crafting table is
      */
 
@@ -91,16 +94,18 @@ public class CraftingTableManager {
     }
 
     /**
-     * This method return true if a craftingTable is not registered and false if it is.
+     * This method return true if a craftingTable is registered and false if it is not.
+     *
      * @param location The location where the crafting table is
      */
 
-    public boolean isCraftingTableNotRegistered(Location location) {
-        return craftingTables.getString(getSavedLocation(location) + ".0") == null;
+    public boolean isCraftingTableRegistered(Location location) {
+        return craftingTables.getString(getSavedLocation(location) + ".0") != null;
     }
 
     /**
      * This method converts a location to a String how the location is stored in the craftingTables.yml file.
+     *
      * @param location The location you want to convert
      */
     public String getSavedLocation(Location location) {
@@ -109,15 +114,17 @@ public class CraftingTableManager {
 
     /**
      * This method converts a String how the location is stored in the craftingTables.yml file to a real location.
+     *
      * @param string The string you want to convert
      */
 
     public Location getLocationFromSavedString(String string) {
-        String[] strings = string.split(",");
-        World world = Bukkit.getWorld(strings[0]);
-        int x = Integer.parseInt(strings[1]);
-        int y = Integer.parseInt(strings[2]);
-        int z = Integer.parseInt(strings[3]);
+
+        String[] info = string.split(",");
+        World world = Bukkit.getWorld(info[0]);
+        int x = Integer.parseInt(info[1]);
+        int y = Integer.parseInt(info[2]);
+        int z = Integer.parseInt(info[3]);
         return new Location(world, x, y, z);
     }
 
@@ -125,13 +132,13 @@ public class CraftingTableManager {
      * This method converts the index from a 0-8 inventory to a 0-27 inventory.
      */
 
-    public int castFromSmallInventoryToBigInventory(int i) {
-        if (i >= 0 && i <= 2) {
-            return i + 3;
-        } else if (i >= 3 && i <= 5) {
-            return i + 9;
-        } else if (i >= 6 && i <= 8) {
-            return i + 15;
+    public int castFromSmallInventoryToBigInventory(int smallInventoryIndex) {
+        if (smallInventoryIndex >= 0 && smallInventoryIndex <= 2) {
+            return smallInventoryIndex + 3;
+        } else if (smallInventoryIndex >= 3 && smallInventoryIndex <= 5) {
+            return smallInventoryIndex + 9;
+        } else if (smallInventoryIndex >= 6 && smallInventoryIndex <= 8) {
+            return smallInventoryIndex + 15;
         }
         return 0;
     }
@@ -140,38 +147,40 @@ public class CraftingTableManager {
      * This method converts the index from a 0-27 inventory to a 0-8 inventory.
      */
 
-    public int castFromBigInventoryToSmallInventory(int i) {
-        if (i >= 3 && i <= 5) {
-            return i - 3;
-        } else if (i >= 12 && i <= 14) {
-            return i - 9;
-        } else if (i >= 21 && i <= 23) {
-            return i - 15;
+    public int castFromBigInventoryToSmallInventory(int bigInventoryIndex) {
+        if (bigInventoryIndex >= 3 && bigInventoryIndex <= 5) {
+            return bigInventoryIndex - 3;
+        } else if (bigInventoryIndex >= 12 && bigInventoryIndex <= 14) {
+            return bigInventoryIndex - 9;
+        } else if (bigInventoryIndex >= 21 && bigInventoryIndex <= 23) {
+            return bigInventoryIndex - 15;
         }
         return 0;
     }
 
     /**
      * This method returns all Items stacked from a crafting table.
+     *
      * @param location The location where the craftingTable is.
      */
 
     public ArrayList<ItemStack> getItemsInCraftingTable(Location location) {
         ArrayList<ItemStack> itemsInCraftingTable = new ArrayList<>();
-        for (int i = 0; i<9; i++) {
-            itemsInCraftingTable.add(getItemFromIndex(location, i));
+        for (int index = 0; index < 9; index++) {
+            itemsInCraftingTable.add(getItemFromIndex(location, index));
         }
         return StackItems.combine(itemsInCraftingTable);
     }
 
     /**
      * This method removes all the info from a crafting in the craftingTables.yml
+     *
      * @param location
      */
 
     public void removeCraftingTable(Location location) {
-        for (int i = 0; i<9; i++) {
-            craftingTables.set(getSavedLocation(location) + "." + i, null);
+        for (int index = 0; index < 9; index++) {
+            craftingTables.set(getSavedLocation(location) + "." + index, null);
         }
         craftingTables.set(getSavedLocation(location), null);
     }
@@ -180,7 +189,7 @@ public class CraftingTableManager {
      * This method returns all locations from registered crafting tables.
      */
 
-    public Set<String> getLocations () {
+    public Set<String> getLocations() {
         return Objects.requireNonNull(craftingTables.getConfigurationSection("")).getKeys(false);
     }
 

@@ -55,13 +55,8 @@ public class CraftingTableRightClickListener implements Listener {
         playerInteractEvent.setCancelled(true);
 
         CraftingTableManager craftingTableManager = automaticCraftingTable.getCraftingTableManager();
-        if (craftingTableManager.isCraftingTableNotRegistered(craftingTable.getLocation())) {
-            craftingTableManager.addEmptyCraftingTable(craftingTable.getLocation());
-            craftingTableManager.saveCraftingTables();
-        }
 
-        new CraftingTableEditUI(player, craftingTableManager, craftingTable);
-
+        new CraftingTableEditUI(player, craftingTableManager, craftingTable,
+                craftingTableManager.isCraftingTableRegistered(craftingTable.getLocation()));
     }
-
 }

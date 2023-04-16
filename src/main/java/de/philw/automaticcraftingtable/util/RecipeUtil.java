@@ -23,9 +23,9 @@ public class RecipeUtil {
 
     public ArrayList<Recipe> getRecipes() {
         ArrayList<Recipe> recipes = new ArrayList<>();
-        Iterator<Recipe> it = automaticCraftingTable.getServer().recipeIterator();
-        while (it.hasNext()) {
-            Recipe recipe = it.next();
+        Iterator<Recipe> recipeIterator = automaticCraftingTable.getServer().recipeIterator();
+        while (recipeIterator.hasNext()) {
+            Recipe recipe = recipeIterator.next();
             recipes.add(recipe);
         }
         return recipes;
@@ -35,17 +35,19 @@ public class RecipeUtil {
 
     /**
      * This method returns am Item from a crafting recipe or null
+     *
      * @param items The items from the recipe
      */
 
     public ItemStack getCraftResult(List<ItemStack> items) {
         if (cache.containsKey(items)) {
-            recipe = Bukkit.getRecipesFor(cache.get(items)).get(0); // This is because we later need to get the recipe for the item but when a
+            recipe = Bukkit.getRecipesFor(cache.get(items)).get(0); // This is because we later need to get the
+            // recipe for the item but when a
             // false recipe is in cache for example because another crafting table the recipe still gets updated
             return cache.get(items);
         }
 
-        if (items.size() != 9) { // list correct?
+        if (items.size() != 9) { // is this list correct?
             return null;
         }
         boolean notNull = false;
@@ -61,12 +63,12 @@ public class RecipeUtil {
 
         ItemStack result;
 
-        // Load recipes after every plugin activated.
+        // This is because it loads AFTER every plugin has loaded for custom recipes
         if (recipes == null) {
             recipes = getRecipes();
         }
         for (Recipe recipe : recipes) {
-            if (recipe instanceof ShapelessRecipe) { // shapeless recipe
+            if (recipe instanceof ShapelessRecipe) { // Shapeless recipe
                 result = matchesShapeless(((ShapelessRecipe) recipe).getChoiceList(), items) ? recipe.getResult()
                         : null;
                 if (result != null) {
@@ -74,7 +76,7 @@ public class RecipeUtil {
                     this.recipe = recipe;
                     return result;
                 }
-            } else if (recipe instanceof ShapedRecipe) { // shaped recipe
+            } else if (recipe instanceof ShapedRecipe) { // Shaped recipe
                 result = matchesShaped((ShapedRecipe) recipe, items) ? recipe.getResult() : null;
                 if (result != null) {
                     cache.put(items, result);
@@ -86,15 +88,15 @@ public class RecipeUtil {
         return null;
     }
 
-    private boolean matchesShapeless(List<RecipeChoice> choice, List<ItemStack> items) {
+    private boolean matchesShapeless(List<RecipeChoice> choices, List<ItemStack> items) {
         items = new ArrayList<>(items);
-        for (RecipeChoice c : choice) {
+        for (RecipeChoice recipeChoice : choices) {
             boolean match = false;
             for (int i = 0; i < items.size(); i++) {
                 ItemStack item = items.get(i);
                 if (item == null || item.getType() == Material.AIR)
                     continue;
-                if (c.test(item)) {
+                if (recipeChoice.test(item)) {
                     match = true;
                     items.remove(item);
                     break;
@@ -109,52 +111,53 @@ public class RecipeUtil {
 
     private boolean matchesShaped(ShapedRecipe recipe, List<ItemStack> items) {
         RecipeChoice[][] recipeArray = new RecipeChoice[recipe.getShape().length][recipe.getShape()[0].length()];
-        for (int i = 0; i < recipe.getShape().length; i++) {
-            for (int j = 0; j < recipe.getShape()[i].length(); j++) {
-                recipeArray[i][j] = recipe.getChoiceMap().get(recipe.getShape()[i].toCharArray()[j]);
+        for (int x = 0; x < recipe.getShape().length; x++) {
+            for (int y = 0; y < recipe.getShape()[x].length(); y++) {
+                recipeArray[x][y] = recipe.getChoiceMap().get(recipe.getShape()[x].toCharArray()[y]);
             }
         }
 
         int counter = 0;
         ItemStack[][] itemsArray = new ItemStack[3][3];
-        for (int i = 0; i < itemsArray.length; i++) {
-            for (int j = 0; j < itemsArray[i].length; j++) {
-                itemsArray[i][j] = items.get(counter);
+        for (int x = 0; x < itemsArray.length; x++) {
+            for (int y = 0; y < itemsArray[x].length; y++) {
+                itemsArray[x][y] = items.get(counter);
                 counter++;
             }
         }
 
-        // itemsArray manipulation
         Object[][] tmpArray = reduceArray(itemsArray);
         itemsArray = new ItemStack[tmpArray.length][tmpArray[0].length];
-        for (int i = 0; i < tmpArray.length; i++) {
-            for (int j = 0; j < tmpArray[i].length; j++) {
-                itemsArray[i][j] = (ItemStack) tmpArray[i][j];
+        for (int x = 0; x < tmpArray.length; x++) {
+            for (int y = 0; y < tmpArray[x].length; y++) {
+                itemsArray[x][y] = (ItemStack) tmpArray[x][y];
             }
         }
+
         ItemStack[][] itemsArrayMirrored = new ItemStack[itemsArray.length][itemsArray[0].length];
-        for (int i = 0; i < itemsArray.length; i++) {
-            int jPos = 0;
-            for (int j = itemsArray[i].length - 1; j >= 0; j--) {
-                itemsArrayMirrored[i][jPos] = itemsArray[i][j];
-                jPos++;
+        for (int x = 0; x < itemsArray.length; x++) {
+            int yPos = 0;
+            for (int y = itemsArray[x].length - 1; y >= 0; y--) {
+                itemsArrayMirrored[x][yPos] = itemsArray[x][y];
+                yPos++;
             }
         }
+
         return match(itemsArray, recipeArray) || match(itemsArrayMirrored, recipeArray);
     }
 
     private boolean match(ItemStack[][] itemsArray, RecipeChoice[][] recipeArray) {
         boolean match = true;
         if (itemsArray.length == recipeArray.length && itemsArray[0].length == recipeArray[0].length) {
-            for (int i = 0; i < recipeArray.length; i++) {
-                for (int j = 0; j < recipeArray[0].length; j++) {
-                    if (recipeArray[i][j] != null && itemsArray[i][j] != null) {
-                        if (!recipeArray[i][j].test(itemsArray[i][j])) {
+            for (int x = 0; x < recipeArray.length; x++) {
+                for (int y = 0; y < recipeArray[0].length; y++) {
+                    if (recipeArray[x][y] != null && itemsArray[x][y] != null) {
+                        if (!recipeArray[x][y].test(itemsArray[x][y])) {
                             match = false;
                             break;
                         }
-                    } else if ((recipeArray[i][j] == null && itemsArray[i][j] != null)
-                            || (recipeArray[i][j] != null && itemsArray[i][j] == null)) {
+                    } else if ((recipeArray[x][y] == null && itemsArray[x][y] != null)
+                            || (recipeArray[x][y] != null && itemsArray[x][y] == null)) {
                         match = false;
                         break;
                     }
@@ -202,7 +205,9 @@ public class RecipeUtil {
     private ArrayList<ItemStack> cacheIngredientList;
 
     /**
-     * This method returns the ingredients from the recipe in the workbench. Unnecessary items in the workbench will be filtered.
+     * This method returns the ingredients from the recipe in the workbench. Unnecessary items in the workbench will
+     * be filtered.
+     *
      * @param location The location from the workbench
      */
 
@@ -217,18 +222,23 @@ public class RecipeUtil {
             ShapedRecipe shapedRecipe = (ShapedRecipe) recipe;
             Map<Character, ItemStack> ingredientMap = shapedRecipe.getIngredientMap();
             int itemInRecipe = 1;
-            for (int i = 0; i < 9; i++) {
-                if (automaticCraftingTable.getCraftingTableManager().getItemFromIndex(location, i) != null) {
-                    ItemStack itemStack = automaticCraftingTable.getCraftingTableManager().getItemFromIndex(location,
-                            i);
-                    if (ingredientMap.get(Objects.requireNonNull(getCharForNumber(itemInRecipe)).toLowerCase().toCharArray()[0]) != null) {
-                        itemStack.setAmount(ingredientMap.get(Objects.requireNonNull(getCharForNumber(itemInRecipe)).toLowerCase().toCharArray()[0]).getAmount());
-                    } else {
-                        itemStack.setAmount(ingredientMap.get(Objects.requireNonNull(getCharForNumber(i + 1)).toLowerCase().toCharArray()[0]).getAmount());
-                    }
-                    itemInRecipe++;
-                    ingredientList.add(itemStack);
+            for (int index = 0; index < 9; index++) {
+                ItemStack itemStack = automaticCraftingTable.getCraftingTableManager().getItemFromIndex(location,
+                        index);
+                if (itemStack == null) {
+                    continue;
                 }
+                // This is for recipes like craftingTables
+                ItemStack realAmountItemStack = ingredientMap.get(Objects.requireNonNull(getCharForNumber(itemInRecipe)).toLowerCase().toCharArray()[0]);
+                if (realAmountItemStack != null) {
+                    itemStack.setAmount(realAmountItemStack.getAmount());
+                } else {
+                    // This is for recipes like furnace or chest or similar
+                    itemStack.setAmount(ingredientMap.get(
+                            Objects.requireNonNull(getCharForNumber(index + 1)).toLowerCase().toCharArray()[0]).getAmount());
+                }
+                itemInRecipe++;
+                ingredientList.add(itemStack);
             }
             cacheIngredientList = StackItems.combine(ingredientList);
             cacheRecipe = recipe;
@@ -237,6 +247,6 @@ public class RecipeUtil {
     }
 
     private String getCharForNumber(int i) {
-        return i > 0 && i < 27 ? String.valueOf((char)(i + 64)) : null;
+        return i > 0 && i < 27 ? String.valueOf((char) (i + 64)) : null;
     }
 }

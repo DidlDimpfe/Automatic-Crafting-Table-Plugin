@@ -9,20 +9,26 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c18f7852-c609-46b7-ac96-166f3b4173ef" name="Changes" comment="Method explanation added.">
-      <change afterPath="$PROJECT_DIR$/src/main/java/de/philw/automaticcraftingtable/manager/ConfigManager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/config.yml" afterDir="false" />
+    <list default="true" id="c18f7852-c609-46b7-ac96-166f3b4173ef" name="Changes" comment="Config file added">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/de/philw/automaticcraftingtable/AutomaticCraftingTable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/philw/automaticcraftingtable/AutomaticCraftingTable.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/philw/automaticcraftingtable/listener/BreakBlockListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/philw/automaticcraftingtable/listener/BreakBlockListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/philw/automaticcraftingtable/listener/CheckHopperTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/philw/automaticcraftingtable/listener/CheckHopperTask.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/de/philw/automaticcraftingtable/listener/CraftingTableEditUIListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/philw/automaticcraftingtable/listener/CraftingTableEditUIListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/philw/automaticcraftingtable/listener/CraftingTableRightClickListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/philw/automaticcraftingtable/listener/CraftingTableRightClickListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/philw/automaticcraftingtable/manager/ConfigManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/philw/automaticcraftingtable/manager/ConfigManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/philw/automaticcraftingtable/manager/CraftingTableManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/philw/automaticcraftingtable/manager/CraftingTableManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/de/philw/automaticcraftingtable/ui/CraftingTableEditUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/philw/automaticcraftingtable/ui/CraftingTableEditUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/philw/automaticcraftingtable/util/Direction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/philw/automaticcraftingtable/util/Direction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/philw/automaticcraftingtable/util/RecipeUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/philw/automaticcraftingtable/util/RecipeUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/plugin.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/de/philw/automaticcraftingtable/AutomaticCraftingTable.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/de/philw/automaticcraftingtable/AutomaticCraftingTable.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/de/philw/automaticcraftingtable/listener/BreakBlockListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/de/philw/automaticcraftingtable/listener/BreakBlockListener.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/de/philw/automaticcraftingtable/listener/CraftingTableEditUIListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/de/philw/automaticcraftingtable/listener/CraftingTableEditUIListener.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/de/philw/automaticcraftingtable/listener/CraftingTableRightClickListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/de/philw/automaticcraftingtable/listener/CraftingTableRightClickListener.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/de/philw/automaticcraftingtable/manager/CraftingTableManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/de/philw/automaticcraftingtable/manager/CraftingTableManager.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/de/philw/automaticcraftingtable/ui/CraftingTableEditUI.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/de/philw/automaticcraftingtable/ui/CraftingTableEditUI.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/de/philw/automaticcraftingtable/util/RecipeUtil.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/de/philw/automaticcraftingtable/util/RecipeUtil.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/de/philw/automaticcraftingtable/util/StackItems.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/de/philw/automaticcraftingtable/util/StackItems.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -80,7 +86,7 @@
   <component name="RunManager" selected="JAR Application.Debug">
     <configuration name="Debug" type="JarApplication">
       <option name="JAR_PATH" value="$PROJECT_DIR$/../../Minecraft Server/AutomaticCraftingTable/spigot.jar" />
-      <option name="VM_PARAMETERS" value="-DIReallyKnowWhatIAmDoingISwear" />
+      <option name="VM_PARAMETERS" value="-DIReallyKnowWhatIAmDoingISwear -Xms4096M -Xmx4096M -Dterminal.jline=false -Dterminal.ansi=true -XX:+UseG1GC -XX:+ParallelRefProcEnabled -XX:MaxGCPauseMillis=200 -XX:+UnlockExperimentalVMOptions -XX:+DisableExplicitGC -XX:+AlwaysPreTouch -XX:G1HeapWastePercent=5 -XX:G1MixedGCCountTarget=4 -XX:G1MixedGCLiveThresholdPercent=90 -XX:G1RSetUpdatingPauseTimePercent=5 -XX:SurvivorRatio=32 -XX:+PerfDisableSharedMem -XX:MaxTenuringThreshold=1 -XX:G1NewSizePercent=30 -XX:G1MaxNewSizePercent=40 -XX:G1HeapRegionSize=8M -XX:G1ReservePercent=20 -XX:InitiatingHeapOccupancyPercent=15 -Dusing.aikars.flags=https://mcflags.emc.gs -Daikars.new.flags=true" />
       <option name="WORKING_DIRECTORY" value="C:\Users\philw\Desktop\Alles\Minecraft Server\AutomaticCraftingTable" />
       <option name="ALTERNATIVE_JRE_PATH" />
       <method v="2">
@@ -169,7 +175,14 @@
       <option name="project" value="LOCAL" />
       <updated>1681565462184</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Config file added">
+      <created>1681638673489</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1681638673489</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -185,7 +198,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Method explanation added." />
-    <option name="LAST_COMMIT_MESSAGE" value="Method explanation added." />
+    <MESSAGE value="Config file added" />
+    <option name="LAST_COMMIT_MESSAGE" value="Config file added" />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>

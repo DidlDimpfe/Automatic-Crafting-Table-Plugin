@@ -13,7 +13,7 @@ public class BreakBlockListener implements Listener {
 
     private final AutomaticCraftingTable automaticCraftingTable;
 
-    public BreakBlockListener (AutomaticCraftingTable automaticCraftingTable) {
+    public BreakBlockListener(AutomaticCraftingTable automaticCraftingTable) {
         this.automaticCraftingTable = automaticCraftingTable;
     }
 
@@ -29,11 +29,11 @@ public class BreakBlockListener implements Listener {
             return;
         }
         CraftingTableManager craftingTableManager = automaticCraftingTable.getCraftingTableManager();
-        if (craftingTableManager.isCraftingTableNotRegistered(craftingTable.getLocation())) {
+        if (!craftingTableManager.isCraftingTableRegistered(craftingTable.getLocation())) {
             return;
         }
 
-        for (ItemStack itemStack: craftingTableManager.getItemsInCraftingTable(craftingTable.getLocation())) {
+        for (ItemStack itemStack : craftingTableManager.getItemsInCraftingTable(craftingTable.getLocation())) {
             craftingTable.getWorld().dropItemNaturally(craftingTable.getLocation(), itemStack);
         }
 

@@ -18,7 +18,7 @@ public class CheckHopperTask implements Runnable {
     private final AutomaticCraftingTable automaticCraftingTable;
     private final CraftingTableManager craftingTableManager;
 
-    public CheckHopperTask (AutomaticCraftingTable automaticCraftingTable) {
+    public CheckHopperTask(AutomaticCraftingTable automaticCraftingTable) {
         this.automaticCraftingTable = automaticCraftingTable;
         this.craftingTableManager = automaticCraftingTable.getCraftingTableManager();
     }
@@ -31,8 +31,8 @@ public class CheckHopperTask implements Runnable {
 
     @Override
     public void run() {
-        for (String string: automaticCraftingTable.getCraftingTableManager().getLocations()) {
-            Location location = craftingTableManager.getLocationFromSavedString(string);
+        for (String savedLocations : automaticCraftingTable.getCraftingTableManager().getLocations()) {
+            Location location = craftingTableManager.getLocationFromSavedString(savedLocations);
             if (location == null) {
                 continue;
             }
@@ -40,22 +40,23 @@ public class CheckHopperTask implements Runnable {
             if (craftingTable.getType() != Material.CRAFTING_TABLE) {
                 continue;
             }
-            for (Hopper hopper: getHoppersWhereItemComesFrom(craftingTable)) {
-                if (hopper.getInventory().isEmpty()) {
+            for (Hopper fromHopper : getHoppersWhereItemComesFrom(craftingTable)) {
+                if (fromHopper.getInventory().isEmpty()) {
                     continue;
                 }
 
                 CraftingTableManager craftingTableManager = automaticCraftingTable.getCraftingTableManager();
-                if (craftingTableManager.isCraftingTableNotRegistered(craftingTable.getLocation())) {
+                if (!craftingTableManager.isCraftingTableRegistered(craftingTable.getLocation())) {
                     craftingTableManager.addEmptyCraftingTable(craftingTable.getLocation());
                     craftingTableManager.saveCraftingTables();
                 }
 
                 List<ItemStack> contents = new ArrayList<>();
 
-                for (int i = 0; i < 9; i++) {
-                    contents.add(i, craftingTableManager.getItemFromIndex(craftingTable.getLocation(), i) == null ? null :
-                            craftingTableManager.getItemFromIndex(craftingTable.getLocation(), i));
+                for (int index = 0; index < 9; index++) {
+                    contents.add(index,
+                            craftingTableManager.getItemFromIndex(craftingTable.getLocation(), index) == null ? null :
+                                    craftingTableManager.getItemFromIndex(craftingTable.getLocation(), index));
                 }
 
                 ItemStack wantItemStack = automaticCraftingTable.getRecipeUtil().getCraftResult(contents);
@@ -64,9 +65,9 @@ public class CheckHopperTask implements Runnable {
                     continue;
                 }
 
-                Hopper target = getNextTarget(craftingTable, hopper, wantItemStack);
+                Hopper toHopper = getNextTarget(craftingTable, fromHopper, wantItemStack);
 
-                if (target == null) {
+                if (toHopper == null) {
                     continue;
                 }
 
@@ -76,15 +77,16 @@ public class CheckHopperTask implements Runnable {
                         automaticCraftingTable.getRecipeUtil().getIngredientList(craftingTable.getLocation());
 
                 for (ItemStack itemStack : ingredientList) {
-                    if (!hopper.getInventory().containsAtLeast(itemStack, itemStack.getAmount())) {
+                    if (!fromHopper.getInventory().containsAtLeast(itemStack, itemStack.getAmount())) {
                         accepted = false;
                     }
                 }
+
                 if (accepted) {
                     wantItemStack.setAmount(1);
-                    target.getInventory().addItem(wantItemStack);
+                    toHopper.getInventory().addItem(wantItemStack);
                     for (ItemStack itemStack : ingredientList) {
-                        hopper.getInventory().removeItem(itemStack);
+                        fromHopper.getInventory().removeItem(itemStack);
                     }
                 }
             }
@@ -125,7 +127,7 @@ public class CheckHopperTask implements Runnable {
      *
      * @param craftingTable The Crafting Table
      * @param wantItemStack The item what should be transported
-     * @param hopper The hopper where the item is coming from
+     * @param hopper        The hopper where the item is coming from
      * @return The hopper down (first choice) or to the hopper in the opposite direction (second choice) or to the
      * next connected hopper (third choice) or null
      */
@@ -173,20 +175,24 @@ public class CheckHopperTask implements Runnable {
         if (craftingTable.getWorld().getBlockAt(craftingTable.getLocation().subtract(0, 0, 1)).getType() == Material.HOPPER) {
             target =
                     (Hopper) craftingTable.getWorld().getBlockAt(craftingTable.getLocation().subtract(0, 0, 1)).getState();
-            if (target.getLocation() != hopper.getLocation() && hopperIsNotFull(target, wantItemStack) && hopperIsFacing(target, Direction.NORTH)) return target;
+            if (target.getLocation() != hopper.getLocation() && hopperIsNotFull(target, wantItemStack) && hopperIsFacing(target, Direction.NORTH))
+                return target;
         }
         if (craftingTable.getWorld().getBlockAt(craftingTable.getLocation().add(0, 0, 1)).getType() == Material.HOPPER) {
             target = (Hopper) craftingTable.getWorld().getBlockAt(craftingTable.getLocation().add(0, 0, 1)).getState();
-            if (target.getLocation() != hopper.getLocation() && hopperIsNotFull(target, wantItemStack) && hopperIsFacing(target, Direction.SOUTH)) return target;
+            if (target.getLocation() != hopper.getLocation() && hopperIsNotFull(target, wantItemStack) && hopperIsFacing(target, Direction.SOUTH))
+                return target;
         }
         if (craftingTable.getWorld().getBlockAt(craftingTable.getLocation().subtract(1, 0, 0)).getType() == Material.HOPPER) {
             target =
                     (Hopper) craftingTable.getWorld().getBlockAt(craftingTable.getLocation().subtract(1, 0, 0)).getState();
-            if (target.getLocation() != hopper.getLocation() && hopperIsNotFull(target, wantItemStack) && hopperIsFacing(target, Direction.WEST)) return target;
+            if (target.getLocation() != hopper.getLocation() && hopperIsNotFull(target, wantItemStack) && hopperIsFacing(target, Direction.WEST))
+                return target;
         }
         if (craftingTable.getWorld().getBlockAt(craftingTable.getLocation().add(1, 0, 0)).getType() == Material.HOPPER) {
             target = (Hopper) craftingTable.getWorld().getBlockAt(craftingTable.getLocation().add(1, 0, 0)).getState();
-            if (target.getLocation() != hopper.getLocation() && hopperIsNotFull(target, wantItemStack) && hopperIsFacing(target, Direction.EAST)) return target;
+            if (target.getLocation() != hopper.getLocation() && hopperIsNotFull(target, wantItemStack) && hopperIsFacing(target, Direction.EAST))
+                return target;
         }
 
         return null;
@@ -195,31 +201,36 @@ public class CheckHopperTask implements Runnable {
     private ArrayList<Hopper> getHoppersWhereItemComesFrom(Block craftingTable) {
         ArrayList<Hopper> hoppersWhereItemsComesFrom = new ArrayList<>();
         if (craftingTable.getWorld().getBlockAt(craftingTable.getLocation().add(0, 1, 0)).getType() == Material.HOPPER) {
-            Hopper hopper = (Hopper) craftingTable.getWorld().getBlockAt(craftingTable.getLocation().add(0, 1, 0)).getState();
+            Hopper hopper =
+                    (Hopper) craftingTable.getWorld().getBlockAt(craftingTable.getLocation().add(0, 1, 0)).getState();
             if (hopperIsFacing(hopper, Direction.DOWN)) {
                 hoppersWhereItemsComesFrom.add(hopper);
             }
         }
         if (craftingTable.getWorld().getBlockAt(craftingTable.getLocation().add(1, 0, 0)).getType() == Material.HOPPER) {
-            Hopper hopper = (Hopper) craftingTable.getWorld().getBlockAt(craftingTable.getLocation().add(1, 0, 0)).getState();
+            Hopper hopper =
+                    (Hopper) craftingTable.getWorld().getBlockAt(craftingTable.getLocation().add(1, 0, 0)).getState();
             if (hopperIsFacing(hopper, Direction.WEST)) {
                 hoppersWhereItemsComesFrom.add(hopper);
             }
         }
         if (craftingTable.getWorld().getBlockAt(craftingTable.getLocation().subtract(1, 0, 0)).getType() == Material.HOPPER) {
-            Hopper hopper = (Hopper) craftingTable.getWorld().getBlockAt(craftingTable.getLocation().subtract(1, 0, 0)).getState();
+            Hopper hopper = (Hopper) craftingTable.getWorld().getBlockAt(craftingTable.getLocation().subtract(1, 0,
+                    0)).getState();
             if (hopperIsFacing(hopper, Direction.EAST)) {
                 hoppersWhereItemsComesFrom.add(hopper);
             }
         }
         if (craftingTable.getWorld().getBlockAt(craftingTable.getLocation().add(0, 0, 1)).getType() == Material.HOPPER) {
-            Hopper hopper = (Hopper) craftingTable.getWorld().getBlockAt(craftingTable.getLocation().add(0, 0, 1)).getState();
+            Hopper hopper =
+                    (Hopper) craftingTable.getWorld().getBlockAt(craftingTable.getLocation().add(0, 0, 1)).getState();
             if (hopperIsFacing(hopper, Direction.NORTH)) {
                 hoppersWhereItemsComesFrom.add(hopper);
             }
         }
         if (craftingTable.getWorld().getBlockAt(craftingTable.getLocation().subtract(0, 0, 1)).getType() == Material.HOPPER) {
-            Hopper hopper = (Hopper) craftingTable.getWorld().getBlockAt(craftingTable.getLocation().subtract(0, 0, 1)).getState();
+            Hopper hopper = (Hopper) craftingTable.getWorld().getBlockAt(craftingTable.getLocation().subtract(0, 0,
+                    1)).getState();
             if (hopperIsFacing(hopper, Direction.SOUTH)) {
                 hoppersWhereItemsComesFrom.add(hopper);
             }

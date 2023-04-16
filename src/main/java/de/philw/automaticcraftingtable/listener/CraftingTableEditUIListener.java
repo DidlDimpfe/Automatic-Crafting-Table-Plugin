@@ -2,6 +2,7 @@ package de.philw.automaticcraftingtable.listener;
 
 import de.philw.automaticcraftingtable.AutomaticCraftingTable;
 import de.philw.automaticcraftingtable.manager.ConfigManager;
+import de.philw.automaticcraftingtable.manager.CraftingTableManager;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -30,7 +31,8 @@ public class CraftingTableEditUIListener implements Listener {
         if (inventoryClickEvent.getClickedInventory() == null) {
             return;
         }
-        if (!inventoryClickEvent.getView().getTitle().equals(ChatColor.translateAlternateColorCodes('&', ConfigManager.getCraftingTableDisplay()))) {
+        if (!inventoryClickEvent.getView().getTitle().equals(ChatColor.translateAlternateColorCodes('&',
+                ConfigManager.getCraftingTableDisplay()))) {
             return;
         }
         if (inventoryClickEvent.getClickedInventory() != inventoryClickEvent.getInventory()) {
@@ -52,21 +54,39 @@ public class CraftingTableEditUIListener implements Listener {
 
     @EventHandler
     public void onInventoryClose(InventoryCloseEvent inventoryCloseEvent) {
-        if (!inventoryCloseEvent.getView().getTitle().equals(ChatColor.translateAlternateColorCodes('&', ConfigManager.getCraftingTableDisplay()))) {
+        if (!inventoryCloseEvent.getView().getTitle().equals(ChatColor.translateAlternateColorCodes('&',
+                ConfigManager.getCraftingTableDisplay()))) {
             return;
         }
-        for (int i : new int[]{3, 4, 5, 12, 13, 14, 21, 22, 23}) {
-            ItemStack itemStack = inventoryCloseEvent.getInventory().getItem(i);
-            Location location =
-                    automaticCraftingTable.getCraftingTableManager().getLocationFromSavedString(
-                            Objects.requireNonNull(Objects.requireNonNull(inventoryCloseEvent.getInventory().getItem(0)).
-                                    getItemMeta()).getLocalizedName());
-            automaticCraftingTable.getCraftingTableManager().setItemToIndex(location,
-                    automaticCraftingTable.getCraftingTableManager().castFromBigInventoryToSmallInventory(i),
+        CraftingTableManager craftingTableManager = automaticCraftingTable.getCraftingTableManager();
+        Location location = craftingTableManager.getLocationFromSavedString(
+                Objects.requireNonNull(Objects.requireNonNull(inventoryCloseEvent.getInventory().getItem(0)).
+                        getItemMeta()).getLocalizedName());
+        boolean empty = true;
+        // Get the items from the inventory and store it in the craftingTable.yml
+        for (int bigInventoryIndex : new int[]{3, 4, 5, 12, 13, 14, 21, 22, 23}) {
+            ItemStack itemStack = inventoryCloseEvent.getInventory().getItem(bigInventoryIndex);
+            craftingTableManager.setItemToIndex(location,
+                    craftingTableManager.castFromBigInventoryToSmallInventory(bigInventoryIndex),
                     itemStack);
+            if (itemStack != null) {
+                empty = false;
+            }
         }
-        automaticCraftingTable.getCraftingTableManager().saveCraftingTables();
+        // If nothing is in a registered craftingTable why saving it? REMOVE!
+        if (empty && craftingTableManager.isCraftingTableRegistered(location)) {
+            craftingTableManager.removeCraftingTable(location);
+            craftingTableManager.saveCraftingTables();
+            return;
+        }
+        if (empty) {
+            return;
+        }
+        // Store the changes
+        if (!craftingTableManager.isCraftingTableRegistered(location)) {
+            craftingTableManager.addEmptyCraftingTable(location);
+            craftingTableManager.saveCraftingTables();
+        }
+        craftingTableManager.saveCraftingTables();
     }
-
-
 }
