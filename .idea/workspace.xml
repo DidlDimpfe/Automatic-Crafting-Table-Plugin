@@ -10,8 +10,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c18f7852-c609-46b7-ac96-166f3b4173ef" name="Changes" comment="Method explanation added.">
-      <change beforePath="$PROJECT_DIR$/src/main/java/de/philw/automaticcraftingtable/util/RecipeUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/philw/automaticcraftingtable/util/RecipeUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/de/philw/automaticcraftingtable/util/StackItems.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/philw/automaticcraftingtable/util/StackItems.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/de/philw/automaticcraftingtable/manager/ConfigManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/config.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/philw/automaticcraftingtable/AutomaticCraftingTable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/philw/automaticcraftingtable/AutomaticCraftingTable.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/philw/automaticcraftingtable/listener/CraftingTableEditUIListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/philw/automaticcraftingtable/listener/CraftingTableEditUIListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/philw/automaticcraftingtable/ui/CraftingTableEditUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/philw/automaticcraftingtable/ui/CraftingTableEditUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/de/philw/automaticcraftingtable/listener/BreakBlockListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/de/philw/automaticcraftingtable/listener/BreakBlockListener.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/de/philw/automaticcraftingtable/listener/CraftingTableEditUIListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/de/philw/automaticcraftingtable/listener/CraftingTableEditUIListener.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/de/philw/automaticcraftingtable/listener/CraftingTableRightClickListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/de/philw/automaticcraftingtable/listener/CraftingTableRightClickListener.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/de/philw/automaticcraftingtable/manager/CraftingTableManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/de/philw/automaticcraftingtable/manager/CraftingTableManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/de/philw/automaticcraftingtable/ui/CraftingTableEditUI.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/de/philw/automaticcraftingtable/ui/CraftingTableEditUI.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/de/philw/automaticcraftingtable/util/RecipeUtil.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/de/philw/automaticcraftingtable/util/RecipeUtil.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/de/philw/automaticcraftingtable/util/StackItems.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/de/philw/automaticcraftingtable/util/StackItems.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,7 +66,7 @@
     "TODO_SCOPE": "All Places",
     "git-widget-placeholder": "master",
     "last_opened_file_path": "C:/Users/philw/Desktop/Alles/IntellIJProjekte/AutomaticCraftingTable",
-    "project.structure.last.edited": "Artifacts",
+    "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
     "settings.editor.selected.configurable": "reference.settingsdialog.IDE.editor.colors.Color Scheme Font"

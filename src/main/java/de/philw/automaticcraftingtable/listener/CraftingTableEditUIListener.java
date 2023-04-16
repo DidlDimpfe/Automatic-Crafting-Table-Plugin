@@ -1,6 +1,8 @@
 package de.philw.automaticcraftingtable.listener;
 
 import de.philw.automaticcraftingtable.AutomaticCraftingTable;
+import de.philw.automaticcraftingtable.manager.ConfigManager;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
@@ -28,7 +30,7 @@ public class CraftingTableEditUIListener implements Listener {
         if (inventoryClickEvent.getClickedInventory() == null) {
             return;
         }
-        if (!inventoryClickEvent.getView().getTitle().endsWith("Automatic Workbench Recipe")) {
+        if (!inventoryClickEvent.getView().getTitle().equals(ChatColor.translateAlternateColorCodes('&', ConfigManager.getCraftingTableDisplay()))) {
             return;
         }
         if (inventoryClickEvent.getClickedInventory() != inventoryClickEvent.getInventory()) {
@@ -37,7 +39,8 @@ public class CraftingTableEditUIListener implements Listener {
         if (inventoryClickEvent.getCurrentItem() != null) {
             ItemStack itemStack = inventoryClickEvent.getCurrentItem();
             if (itemStack.getType() == Material.BLACK_STAINED_GLASS_PANE &&
-                    Objects.requireNonNull(itemStack.getItemMeta()).getDisplayName().equals("Space")) {
+                    Objects.requireNonNull(itemStack.getItemMeta()).getDisplayName().
+                            equals(ChatColor.translateAlternateColorCodes('&', ConfigManager.getSpaceDisplay()))) {
                 inventoryClickEvent.setCancelled(true);
             }
         }
@@ -49,7 +52,7 @@ public class CraftingTableEditUIListener implements Listener {
 
     @EventHandler
     public void onInventoryClose(InventoryCloseEvent inventoryCloseEvent) {
-        if (!inventoryCloseEvent.getView().getTitle().endsWith("Automatic Workbench Recipe")) {
+        if (!inventoryCloseEvent.getView().getTitle().equals(ChatColor.translateAlternateColorCodes('&', ConfigManager.getCraftingTableDisplay()))) {
             return;
         }
         for (int i : new int[]{3, 4, 5, 12, 13, 14, 21, 22, 23}) {

@@ -1,5 +1,6 @@
 package de.philw.automaticcraftingtable.ui;
 
+import de.philw.automaticcraftingtable.manager.ConfigManager;
 import de.philw.automaticcraftingtable.manager.CraftingTableManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -19,13 +20,14 @@ public class CraftingTableEditUI {
      */
 
     public CraftingTableEditUI(Player player, CraftingTableManager craftingTableManager, Block craftingTable) {
-        Inventory inventory = Bukkit.createInventory(null, 27, ChatColor.AQUA + "Automatic Workbench Recipe");
+        Inventory inventory = Bukkit.createInventory(null, 27,
+                ChatColor.translateAlternateColorCodes('&', ConfigManager.getCraftingTableDisplay()));
 
         for (int i : new int[]{0, 1, 2, 6, 7, 8, 9, 10, 11, 15, 16, 17, 18, 19, 20, 24, 25, 26}) {
             ItemStack itemStack = new ItemStack(Material.BLACK_STAINED_GLASS_PANE);
             ItemMeta itemMeta = itemStack.getItemMeta();
             itemMeta.setLocalizedName(craftingTableManager.getSavedLocation(craftingTable.getLocation()));
-            itemMeta.setDisplayName("Space");
+            itemMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', ConfigManager.getSpaceDisplay()));
             itemStack.setItemMeta(itemMeta);
             inventory.setItem(i, itemStack);
         }

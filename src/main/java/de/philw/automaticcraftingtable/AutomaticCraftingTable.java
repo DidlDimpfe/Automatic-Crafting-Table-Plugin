@@ -1,6 +1,7 @@
 package de.philw.automaticcraftingtable;
 
 import de.philw.automaticcraftingtable.listener.*;
+import de.philw.automaticcraftingtable.manager.ConfigManager;
 import de.philw.automaticcraftingtable.manager.CraftingTableManager;
 import de.philw.automaticcraftingtable.util.RecipeUtil;
 import org.bukkit.Bukkit;
@@ -13,6 +14,11 @@ public final class AutomaticCraftingTable extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        ConfigManager.setUpConfig(this);
+        if (!ConfigManager.getEnabled()) {
+            return;
+        }
+
         craftingTableManager = new CraftingTableManager(this);
         recipeUtil = new RecipeUtil(this);
         Bukkit.getPluginManager().registerEvents(new CraftingTableRightClickListener(this), this);
