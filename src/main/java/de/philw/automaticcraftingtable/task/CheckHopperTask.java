@@ -175,23 +175,23 @@ public class CheckHopperTask implements Runnable {
         if (craftingTable.getWorld().getBlockAt(craftingTable.getLocation().subtract(0, 0, 1)).getType() == Material.HOPPER) {
             target =
                     (Hopper) craftingTable.getWorld().getBlockAt(craftingTable.getLocation().subtract(0, 0, 1)).getState();
-            if (target.getLocation() != hopper.getLocation() && hopperIsNotFull(target, wantItemStack) && hopperIsFacing(target, Direction.NORTH))
+            if (target.getLocation() != hopper.getLocation() && hopperIsNotFull(target, wantItemStack) && !hopperIsFacing(target, Direction.SOUTH))
                 return target;
         }
         if (craftingTable.getWorld().getBlockAt(craftingTable.getLocation().add(0, 0, 1)).getType() == Material.HOPPER) {
             target = (Hopper) craftingTable.getWorld().getBlockAt(craftingTable.getLocation().add(0, 0, 1)).getState();
-            if (target.getLocation() != hopper.getLocation() && hopperIsNotFull(target, wantItemStack) && hopperIsFacing(target, Direction.SOUTH))
+            if (target.getLocation() != hopper.getLocation() && hopperIsNotFull(target, wantItemStack) && !hopperIsFacing(target, Direction.NORTH))
                 return target;
         }
         if (craftingTable.getWorld().getBlockAt(craftingTable.getLocation().subtract(1, 0, 0)).getType() == Material.HOPPER) {
             target =
                     (Hopper) craftingTable.getWorld().getBlockAt(craftingTable.getLocation().subtract(1, 0, 0)).getState();
-            if (target.getLocation() != hopper.getLocation() && hopperIsNotFull(target, wantItemStack) && hopperIsFacing(target, Direction.WEST))
+            if (target.getLocation() != hopper.getLocation() && hopperIsNotFull(target, wantItemStack) && !hopperIsFacing(target, Direction.EAST))
                 return target;
         }
         if (craftingTable.getWorld().getBlockAt(craftingTable.getLocation().add(1, 0, 0)).getType() == Material.HOPPER) {
             target = (Hopper) craftingTable.getWorld().getBlockAt(craftingTable.getLocation().add(1, 0, 0)).getState();
-            if (target.getLocation() != hopper.getLocation() && hopperIsNotFull(target, wantItemStack) && hopperIsFacing(target, Direction.EAST))
+            if (target.getLocation() != hopper.getLocation() && hopperIsNotFull(target, wantItemStack) && !hopperIsFacing(target, Direction.WEST))
                 return target;
         }
 

@@ -1,6 +1,7 @@
 package de.philw.automaticcraftingtable.holder;
 
 import de.philw.automaticcraftingtable.AutomaticCraftingTable;
+import me.clip.placeholderapi.PlaceholderAPI;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;

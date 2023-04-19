@@ -9,16 +9,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c18f7852-c609-46b7-ac96-166f3b4173ef" name="Changes" comment="Performance changes">
-      <change afterPath="$PROJECT_DIR$/src/main/java/de/philw/automaticcraftingtable/holder/RegisteredCraftingTableHolder.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/de/philw/automaticcraftingtable/holder/UsedRecipesHolder.java" afterDir="false" />
+    <list default="true" id="c18f7852-c609-46b7-ac96-166f3b4173ef" name="Changes" comment="PlaceholderAPI supported">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/de/philw/automaticcraftingtable/AutomaticCraftingTable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/philw/automaticcraftingtable/AutomaticCraftingTable.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/de/philw/automaticcraftingtable/listener/BreakBlockListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/philw/automaticcraftingtable/listener/BreakBlockListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/de/philw/automaticcraftingtable/util/RecipeUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/philw/automaticcraftingtable/util/RecipeUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/de/philw/automaticcraftingtable/AutomaticCraftingTable.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/de/philw/automaticcraftingtable/AutomaticCraftingTable.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/de/philw/automaticcraftingtable/listener/BreakBlockListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/de/philw/automaticcraftingtable/listener/BreakBlockListener.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/de/philw/automaticcraftingtable/util/RecipeUtil.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/de/philw/automaticcraftingtable/util/RecipeUtil.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/philw/automaticcraftingtable/holder/RegisteredCraftingTableHolder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/philw/automaticcraftingtable/holder/RegisteredCraftingTableHolder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/philw/automaticcraftingtable/task/CheckHopperTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/philw/automaticcraftingtable/task/CheckHopperTask.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/plugin.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/original-automaticcraftingtable-1.0-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/original-automaticcraftingtable-1.0-SNAPSHOT.jar" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -192,7 +188,14 @@
       <option name="project" value="LOCAL" />
       <updated>1681666651367</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="PlaceholderAPI supported">
+      <created>1681911159562</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1681911159562</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -211,7 +214,8 @@
     <MESSAGE value="Config file added" />
     <MESSAGE value="Readability modified" />
     <MESSAGE value="Performance changes" />
-    <option name="LAST_COMMIT_MESSAGE" value="Performance changes" />
+    <MESSAGE value="PlaceholderAPI supported" />
+    <option name="LAST_COMMIT_MESSAGE" value="PlaceholderAPI supported" />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>
