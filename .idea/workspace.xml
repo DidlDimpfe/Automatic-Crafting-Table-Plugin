@@ -9,14 +9,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c18f7852-c609-46b7-ac96-166f3b4173ef" name="Changes" comment="Readability modified">
-      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+    <list default="true" id="c18f7852-c609-46b7-ac96-166f3b4173ef" name="Changes" comment="Performance changes">
+      <change afterPath="$PROJECT_DIR$/src/main/java/de/philw/automaticcraftingtable/holder/RegisteredCraftingTableHolder.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/de/philw/automaticcraftingtable/holder/UsedRecipesHolder.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/de/philw/automaticcraftingtable/AutomaticCraftingTable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/philw/automaticcraftingtable/AutomaticCraftingTable.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/de/philw/automaticcraftingtable/listener/CheckHopperTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/philw/automaticcraftingtable/task/CheckHopperTask.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/de/philw/automaticcraftingtable/util/Direction.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/de/philw/automaticcraftingtable/util/Direction.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/plugin.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/philw/automaticcraftingtable/listener/BreakBlockListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/philw/automaticcraftingtable/listener/BreakBlockListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/philw/automaticcraftingtable/util/RecipeUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/philw/automaticcraftingtable/util/RecipeUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/de/philw/automaticcraftingtable/AutomaticCraftingTable.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/de/philw/automaticcraftingtable/AutomaticCraftingTable.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/de/philw/automaticcraftingtable/listener/BreakBlockListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/de/philw/automaticcraftingtable/listener/BreakBlockListener.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/de/philw/automaticcraftingtable/util/RecipeUtil.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/de/philw/automaticcraftingtable/util/RecipeUtil.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,13 +29,18 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Enum" />
-        <option value="Class" />
         <option value="FxmlFile" />
+        <option value="Class" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="jar://$MAVEN_REPOSITORY$/me/clip/placeholderapi/2.11.3/placeholderapi-2.11.3-sources.jar!/me/clip/placeholderapi/PlaceholderAPI.java" root0="SKIP_INSPECTION" />
+    <setting file="jar://$MAVEN_REPOSITORY$/me/clip/placeholderapi/2.11.3/placeholderapi-2.11.3-sources.jar!/me/clip/placeholderapi/expansion/PlaceholderExpansion.java" root0="SKIP_INSPECTION" />
+    <setting file="jar://$MAVEN_REPOSITORY$/me/clip/placeholderapi/2.11.3/placeholderapi-2.11.3-sources.jar!/me/clip/placeholderapi/replacer/CharsReplacer.java" root0="SKIP_INSPECTION" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -54,19 +61,19 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "TODO_SCOPE": "All Places",
-    "git-widget-placeholder": "master",
-    "last_opened_file_path": "C:/Users/philw/Desktop/Alles/IntellIJProjekte/AutomaticCraftingTable",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "reference.settingsdialog.IDE.editor.colors.Color Scheme Font"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;TODO_SCOPE&quot;: &quot;All Places&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/philw/Desktop/Alles/IntellIJProjekte/AutomaticCraftingTable&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.IDE.editor.colors.Color Scheme Font&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\philw\Desktop\Alles\IntellIJProjekte\AutomaticCraftingTable\src\main\java\de\philw\automaticcraftingtable\manager" />
@@ -178,7 +185,14 @@
       <option name="project" value="LOCAL" />
       <updated>1681652558043</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Performance changes">
+      <created>1681666651367</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1681666651367</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -196,7 +210,8 @@
     <MESSAGE value="Method explanation added." />
     <MESSAGE value="Config file added" />
     <MESSAGE value="Readability modified" />
-    <option name="LAST_COMMIT_MESSAGE" value="Readability modified" />
+    <MESSAGE value="Performance changes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Performance changes" />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>

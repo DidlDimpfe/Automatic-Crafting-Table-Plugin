@@ -1,5 +1,5 @@
 name: AutomaticCraftingTable
-version: '${project.version}'
+version: '1.0.0'
 main: de.philw.automaticcraftingtable.AutomaticCraftingTable
 api-version: 1.19
 authors: [ Phil ]
