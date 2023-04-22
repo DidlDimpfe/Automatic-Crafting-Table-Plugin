@@ -11,6 +11,8 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.Objects;
+
 public class CraftingTableEditUI {
 
     /**
@@ -29,7 +31,7 @@ public class CraftingTableEditUI {
         for (int spaceIndex : new int[]{0, 1, 2, 6, 7, 8, 9, 10, 11, 15, 16, 17, 18, 19, 20, 24, 25, 26}) {
             ItemStack itemStack = new ItemStack(Material.BLACK_STAINED_GLASS_PANE);
             ItemMeta itemMeta = itemStack.getItemMeta();
-            itemMeta.setLocalizedName(craftingTableManager.getSavedLocation(craftingTable.getLocation()));
+            Objects.requireNonNull(itemMeta).setLocalizedName(craftingTableManager.getSavedLocation(craftingTable.getLocation()));
             itemMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', ConfigManager.getSpaceDisplay()));
             itemStack.setItemMeta(itemMeta);
             inventory.setItem(spaceIndex, itemStack);

@@ -175,7 +175,6 @@ public class CraftingTableManager {
     /**
      * This method removes all the info from a crafting in the craftingTables.yml
      *
-     * @param location
      */
 
     public void removeCraftingTable(Location location) {

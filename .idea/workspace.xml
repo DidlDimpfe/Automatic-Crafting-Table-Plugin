@@ -9,12 +9,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c18f7852-c609-46b7-ac96-166f3b4173ef" name="Changes" comment="PlaceholderAPI supported">
+    <list default="true" id="c18f7852-c609-46b7-ac96-166f3b4173ef" name="Changes" comment="Bug fixes">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/de/philw/automaticcraftingtable/holder/RegisteredCraftingTableHolder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/philw/automaticcraftingtable/holder/RegisteredCraftingTableHolder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/de/philw/automaticcraftingtable/task/CheckHopperTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/philw/automaticcraftingtable/task/CheckHopperTask.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/plugin.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/original-automaticcraftingtable-1.0-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/original-automaticcraftingtable-1.0-SNAPSHOT.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/philw/automaticcraftingtable/holder/UsedRecipesHolder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/philw/automaticcraftingtable/holder/UsedRecipesHolder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/philw/automaticcraftingtable/listener/BreakBlockListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/philw/automaticcraftingtable/listener/BreakBlockListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/philw/automaticcraftingtable/manager/CraftingTableManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/philw/automaticcraftingtable/manager/CraftingTableManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/philw/automaticcraftingtable/ui/CraftingTableEditUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/philw/automaticcraftingtable/ui/CraftingTableEditUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -195,7 +198,14 @@
       <option name="project" value="LOCAL" />
       <updated>1681911159562</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Bug fixes">
+      <created>1681918643482</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1681918643482</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -215,7 +225,8 @@
     <MESSAGE value="Readability modified" />
     <MESSAGE value="Performance changes" />
     <MESSAGE value="PlaceholderAPI supported" />
-    <option name="LAST_COMMIT_MESSAGE" value="PlaceholderAPI supported" />
+    <MESSAGE value="Bug fixes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Bug fixes" />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>

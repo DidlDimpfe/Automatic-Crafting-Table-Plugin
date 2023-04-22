@@ -1,7 +1,6 @@
 package de.philw.automaticcraftingtable.holder;
 
 import de.philw.automaticcraftingtable.AutomaticCraftingTable;
-import me.clip.placeholderapi.PlaceholderAPI;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -9,7 +8,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class RegisteredCraftingTableHolder extends PlaceholderExpansion {
 
-    private AutomaticCraftingTable automaticCraftingTable;
+    private final AutomaticCraftingTable automaticCraftingTable;
 
     public RegisteredCraftingTableHolder (AutomaticCraftingTable automaticCraftingTable) {
         this.automaticCraftingTable = automaticCraftingTable;
@@ -37,6 +36,6 @@ public class RegisteredCraftingTableHolder extends PlaceholderExpansion {
 
     @Override
     public @Nullable String onPlaceholderRequest(Player player, @NotNull String params) {
-        return automaticCraftingTable.getCraftingTableManager().getLocations().size() + "";
+        return String.valueOf(automaticCraftingTable.getCraftingTableManager().getLocations().size());
     }
 }

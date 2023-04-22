@@ -12,7 +12,7 @@ import java.util.List;
 
 public class UsedRecipesHolder extends PlaceholderExpansion {
 
-    private AutomaticCraftingTable automaticCraftingTable;
+    private final AutomaticCraftingTable automaticCraftingTable;
 
     public UsedRecipesHolder (AutomaticCraftingTable automaticCraftingTable) {
         this.automaticCraftingTable = automaticCraftingTable;
@@ -48,6 +48,6 @@ public class UsedRecipesHolder extends PlaceholderExpansion {
             }
         }
 
-        return builder.toString().isEmpty() ? "Nothing used yet." : builder.toString().substring(0 , builder.toString().length() -2);
+        return builder.toString().isEmpty() ? "Nothing used yet." : builder.substring(0 , builder.toString().length() -2);
     }
 }
