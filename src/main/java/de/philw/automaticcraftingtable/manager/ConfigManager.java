@@ -9,8 +9,6 @@ public class ConfigManager {
 
     /**
      * This method creates a config and saves the default values from it.
-     *
-     * @param automaticCraftingTable
      */
 
     public static void setUpConfig(AutomaticCraftingTable automaticCraftingTable) {
@@ -19,7 +17,7 @@ public class ConfigManager {
     }
 
     public static String getCraftingTableDisplay() {
-        return config.getString("crafting-table-display");
+        return config.getString("crafting-table-ui-display");
     }
 
     public static boolean getEnabled() {

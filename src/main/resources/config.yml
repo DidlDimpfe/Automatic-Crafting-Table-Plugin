@@ -1,5 +1,5 @@
 # The config file supports color codes. For example gold is &6
 
-crafting-table-display: 'Automatic Crafting Table Recipe'
-crafting-table-ui-space-display: 'space'
 enabled: true
+crafting-table-ui-display: 'Automatic Crafting Table Recipe'
+crafting-table-ui-space-display: 'space'
