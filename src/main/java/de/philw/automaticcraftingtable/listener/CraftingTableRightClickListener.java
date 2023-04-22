@@ -10,7 +10,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.EquipmentSlot;
 
 public class CraftingTableRightClickListener implements Listener {
 
@@ -26,10 +25,6 @@ public class CraftingTableRightClickListener implements Listener {
 
     @EventHandler
     public void onCraftingTableConfigRequested(PlayerInteractEvent playerInteractEvent) {
-
-        if (playerInteractEvent.getHand() != (EquipmentSlot.HAND)) {
-            return;
-        }
 
         Player player = playerInteractEvent.getPlayer();
 

@@ -21,11 +21,13 @@ public final class AutomaticCraftingTable extends JavaPlugin {
     public void onEnable() {
         ConfigManager.setUpConfig(this);
         if (!ConfigManager.getEnabled()) {
-            System.out.println("Plugin has not been enabled. Change it in config.yml");
+            System.out.println("[AutomaticCraftingTable] Plugin has not been enabled. Change it in config.yml");
             return;
         }
-        new RegisteredCraftingTableHolder(this).register();
-        new UsedRecipesHolder(this).register();
+        if (getServer().getPluginManager().getPlugin("PlaceholderAPI")!=null) {
+            new RegisteredCraftingTableHolder(this).register();
+            new UsedRecipesHolder(this).register();
+        }
         craftingTableManager = new CraftingTableManager(this);
         recipeUtil = new RecipeUtil(this);
         Bukkit.getPluginManager().registerEvents(new CraftingTableRightClickListener(this), this);
@@ -33,7 +35,6 @@ public final class AutomaticCraftingTable extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new BreakBlockListener(this), this);
 
         Bukkit.getScheduler().runTaskTimer(this, new CheckHopperTask(this), 4, 4);
-        System.out.println("Plugin has loaded successfully");
     }
 
     public CraftingTableManager getCraftingTableManager() {

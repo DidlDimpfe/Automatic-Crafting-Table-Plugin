@@ -7,6 +7,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.Hopper;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
@@ -41,7 +42,7 @@ public class CheckHopperTask implements Runnable {
                 continue;
             }
             for (Hopper fromHopper : getHoppersWhereItemComesFrom(craftingTable)) {
-                if (fromHopper.getInventory().isEmpty()) {
+                if (isInventoryEmpty(fromHopper.getInventory())) {
                     continue;
                 }
 
@@ -255,6 +256,14 @@ public class CheckHopperTask implements Runnable {
             return hopper.getRawData() == 5 || hopper.getRawData() == 13;
         }
         return false;
+    }
+
+    private boolean isInventoryEmpty(Inventory inventory) {
+        for(ItemStack itemStack : inventory.getContents())
+        {
+            if(itemStack != null) return false;
+        }
+        return true;
     }
 
 }
