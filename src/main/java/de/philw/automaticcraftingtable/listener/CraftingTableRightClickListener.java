@@ -1,6 +1,7 @@
 package de.philw.automaticcraftingtable.listener;
 
 import de.philw.automaticcraftingtable.AutomaticCraftingTable;
+import de.philw.automaticcraftingtable.manager.ConfigManager;
 import de.philw.automaticcraftingtable.manager.CraftingTableManager;
 import de.philw.automaticcraftingtable.ui.CraftingTableEditUI;
 import org.bukkit.Material;
@@ -46,6 +47,13 @@ public class CraftingTableRightClickListener implements Listener {
         }
 
         // To here it is requested
+
+        if (ConfigManager.getUINeedPermission()) {
+
+            if (!player.hasPermission("crafting-table-ui")) {
+                return;
+            }
+        }
 
         playerInteractEvent.setCancelled(true);
 

@@ -2,8 +2,8 @@
 
 <img src="https://cdn.modrinth.com/data/SKieaOni/images/b5e4a22745cfc967d003e108efd4128cc8b9c37a.png" width="500" height="500"/>
 
-<p>You can now automatically craft items within a hopper system. <p/>
-<p>This plugin supports: <p/>
+<p>You can now automatically craft items within a hopper system. </p>
+<p>This plugin supports: </p>
 
 <ul>
 <li>All minecraft versions from 1.14.1 to 1.19.4</li>
@@ -15,7 +15,7 @@
 
 
 <h2>How to use it</h2>
-<p>Simply shift and left click on a crafting table and a new menu pops up:</p>
+<p>Simply shift and left-click on a crafting table and a new menu pops up:</p>
 
 <img src="https://cdn.modrinth.com/data/SKieaOni/images/a2c1b0115c98178d570633002ef521a1fae02a91.png" />
 
@@ -36,14 +36,16 @@ The item you want just dropped into the other hopper!</p>
 enabled: true
 crafting-table-ui-display: 'Automatic Crafting Table Recipe'
 crafting-table-ui-space-display: 'space'
-crafting-table-timer: 4</pre>
+crafting-table-timer: 4
+crafting-table-ui-need-permission: false</pre>
 
 <p>The field "enabled" can be set either to true or false to enable or disable the plugin.</p>
-<p>The field "crafting-table-ui-display" is the menu name of the menu that opens when you shift and left click on a crafting table. Color codes supported.</p>
-<p>The field "crafting-table-ui-space-display" is the name of the Black-Stained-Glass-Paines wich serve as  a placeholder of the menu that opens when you shift and left click on a crafting table. Color codes supported.</p>
-<p>The field "crafting-table-timer" is a number of the time how long your crafting table needs to craft items. The nunmber is in minecraft ticks. For instance: 20 minecraft ticks = 1 second.</p>
+<p>The field "crafting-table-ui-display" is the menu name of the menu that opens when you shift and left-click on a crafting table. Color codes supported.</p>
+<p>The field "crafting-table-ui-space-display" is the name of the Black-Stained-Glass-Panes which serve as  a placeholder of the menu that opens when you shift and left-click on a crafting table. Color codes supported.</p>
+<p>The field "crafting-table-timer" is a number of the time how long your crafting table needs to craft items. The number is in minecraft ticks. For instance: 20 minecraft ticks = 1 second.</p>
+<p>The field "crafting-table-ui-need-permission" can be set either to true or false to make players need to have the "crafting-table-ui" permission to open the automatic crafting table ui.</p>
 
 <h2>PlaceholderAPI</h2>
 
 <p>"automaticcraftingtableTables" returns an int of how many crafting tables are registered.</p>
-<p>"automaticcraftingtableUsedRecipes" returns an String of all items that has been crafted automatically with the plugin.</p>
+<p>"automaticcraftingtableUsedRecipes" returns a String of all items that has been crafted automatically with the plugin.</p>

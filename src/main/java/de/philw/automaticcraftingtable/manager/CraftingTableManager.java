@@ -36,7 +36,7 @@ public class CraftingTableManager {
             try {
                 file.createNewFile();
             } catch (IOException e) {
-                System.err.println("Could not load file craftingTables.yml");
+                System.err.println(AutomaticCraftingTable.getMessageBeginning() + "Could not load file craftingTables.yml");
             }
         }
 
@@ -51,7 +51,7 @@ public class CraftingTableManager {
         try {
             craftingTables.save(file);
         } catch (IOException e) {
-            System.err.println("Could not save craftingTables.yml");
+            System.err.println(AutomaticCraftingTable.getMessageBeginning() + "Could not save craftingTables.yml");
         }
     }
 
