@@ -1,6 +1,7 @@
 package de.philw.automaticcraftingtable.util;
 
 import de.philw.automaticcraftingtable.AutomaticCraftingTable;
+import de.philw.automaticcraftingtable.manager.CraftingTableManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -222,6 +223,7 @@ public class RecipeUtil {
             ShapedRecipe shapedRecipe = (ShapedRecipe) recipe;
             Map<Character, ItemStack> ingredientMap = shapedRecipe.getIngredientMap();
             int itemInRecipe = 1;
+            boolean changeAble = isChangeableRecipe(automaticCraftingTable.getCraftingTableManager(), location);
             for (int index = 0; index < 9; index++) {
                 ItemStack itemStack = automaticCraftingTable.getCraftingTableManager().getItemFromIndex(location,
                         index);
@@ -230,6 +232,10 @@ public class RecipeUtil {
                 }
                 // This is for recipes like craftingTables
                 ItemStack realAmountItemStack = ingredientMap.get(Objects.requireNonNull(getCharForNumber(itemInRecipe)).toLowerCase().toCharArray()[0]);
+                if (changeAble && realAmountItemStack == null) {
+                    // this is for items like a bucket
+                    realAmountItemStack = ingredientMap.get(Objects.requireNonNull(getCharForNumber(itemInRecipe+1)).toLowerCase().toCharArray()[0]);
+                }
                 if (realAmountItemStack != null) {
                     itemStack.setAmount(realAmountItemStack.getAmount());
                 } else {
@@ -253,4 +259,12 @@ public class RecipeUtil {
     public Map<List<ItemStack>, ItemStack> getCache() {
         return cache;
     }
+
+    private boolean isChangeableRecipe(CraftingTableManager craftingTableManager, Location location) {
+        return (craftingTableManager.getItemFromIndex(location, 0) == null && craftingTableManager.getItemFromIndex(location, 1) == null
+            && craftingTableManager.getItemFromIndex(location, 2) == null) || (craftingTableManager.getItemFromIndex(location, 6) == null
+                && craftingTableManager.getItemFromIndex(location, 7) == null
+                && craftingTableManager.getItemFromIndex(location, 8) == null);
+    }
+
 }

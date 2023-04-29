@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Set;
 
+@SuppressWarnings("ALL")
 public class CraftingTableManager {
 
     private final File file;

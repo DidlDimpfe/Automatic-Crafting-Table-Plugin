@@ -5,6 +5,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Objects;
 
 public class ConfigManager {
 
@@ -47,19 +48,19 @@ public class ConfigManager {
 
     private static void updateConfig(AutomaticCraftingTable automaticCraftingTable) {
         if (!config.isSet("enabled")) {
-            config.set("enabled", config.getDefaults().get("enabled"));
+            config.set("enabled", Objects.requireNonNull(config.getDefaults()).get("enabled"));
         }
         if (!config.isSet("crafting-table-ui-display")) {
-            config.set("crafting-table-ui-display", config.getDefaults().get("crafting-table-ui-display"));
+            config.set("crafting-table-ui-display", Objects.requireNonNull(config.getDefaults()).get("crafting-table-ui-display"));
         }
         if (!config.isSet("crafting-table-ui-space-display")) {
-            config.set("crafting-table-ui-space-display", config.getDefaults().get("crafting-table-ui-space-display"));
+            config.set("crafting-table-ui-space-display", Objects.requireNonNull(config.getDefaults()).get("crafting-table-ui-space-display"));
         }
         if (!config.isSet("crafting-table-timer")) {
-            config.set("crafting-table-timer", config.getDefaults().get("crafting-table-timer"));
+            config.set("crafting-table-timer", Objects.requireNonNull(config.getDefaults()).get("crafting-table-timer"));
         }
         if (!config.isSet("crafting-table-ui-need-permission")) {
-            config.set("crafting-table-ui-need-permission", config.getDefaults().get("crafting-table-ui-need-permission"));
+            config.set("crafting-table-ui-need-permission", Objects.requireNonNull(config.getDefaults()).get("crafting-table-ui-need-permission"));
         }
         try {
             config.save(new File(automaticCraftingTable.getDataFolder(), "config.yml"));
