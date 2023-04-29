@@ -21,7 +21,7 @@ public final class AutomaticCraftingTable extends JavaPlugin {
     public void onEnable() {
         ConfigManager.setUpConfig(this);
         if (!ConfigManager.getEnabled()) {
-            System.out.println("[AutomaticCraftingTable] Plugin has not been enabled. Change it in config.yml");
+            System.out.println("[AutomaticCraftingTable] Plugin has not been enabled. Change it in config.yml!");
             return;
         }
         if (getServer().getPluginManager().getPlugin("PlaceholderAPI")!= null) {
