@@ -27,4 +27,8 @@ public class ConfigManager {
     public static String getSpaceDisplay() {
         return config.getString("crafting-table-ui-space-display");
     }
+
+    public static int getTimer() {
+        return config.getInt("crafting-table-timer");
+    }
 }

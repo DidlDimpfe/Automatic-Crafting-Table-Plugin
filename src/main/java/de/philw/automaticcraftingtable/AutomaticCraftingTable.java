@@ -34,7 +34,9 @@ public final class AutomaticCraftingTable extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new CraftingTableEditUIListener(this), this);
         Bukkit.getPluginManager().registerEvents(new BreakBlockListener(this), this);
 
-        Bukkit.getScheduler().runTaskTimer(this, new CheckHopperTask(this), 4, 4);
+        int timer = ConfigManager.getTimer();
+
+        Bukkit.getScheduler().runTaskTimer(this, new CheckHopperTask(this), timer, timer);
     }
 
     public CraftingTableManager getCraftingTableManager() {

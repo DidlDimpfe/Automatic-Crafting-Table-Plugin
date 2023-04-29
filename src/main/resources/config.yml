@@ -3,3 +3,4 @@
 enabled: true
 crafting-table-ui-display: 'Automatic Crafting Table Recipe'
 crafting-table-ui-space-display: 'space'
+crafting-table-timer: 4 # In ticks. 20 ticks = 1 second

@@ -1,7 +1,7 @@
 name: AutomaticCraftingTable
-version: '1.1.0'
+version: '1.1.1'
 main: de.philw.automaticcraftingtable.AutomaticCraftingTable
 api-version: 1.14
 authors: [ Phil ]
-description: This plugin allows you to use a crafting table in a hopper system to automatically craft
+description: You can use a crafting table in a hopper system to automatically craft
   items. Use shift and left click on the crafting table to configure the settings.
