@@ -31,6 +31,10 @@
 <p>Finally, just put the items you need to craft the recipe in the hopper that goes into the crafting table and Voilà!
 The item you want just dropped into the other hopper!</p>
 
+<p>You can also make more than one hopper face into the crafting table. They will work 
+together with the ingredients to craft the item you want. For example, one hopper has 2 sticks
+and the other has 3 diamonds for a diamond pickaxe and it would work!</p>
+
 <h2>The configuration file </h2>
 <pre>
 enabled: true
