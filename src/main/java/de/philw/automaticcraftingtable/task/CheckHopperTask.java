@@ -86,7 +86,6 @@ public class CheckHopperTask implements Runnable {
             }
 
             if (accepted) {
-                wantItemStack.setAmount(1);
                 toHopper.getInventory().addItem(wantItemStack);
                 for (ItemStack itemStack : ingredientList) {
                     for (int i = 1; i<=itemStack.getAmount(); i++) {

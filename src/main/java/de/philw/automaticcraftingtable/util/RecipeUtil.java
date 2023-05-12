@@ -1,7 +1,6 @@
 package de.philw.automaticcraftingtable.util;
 
 import de.philw.automaticcraftingtable.AutomaticCraftingTable;
-import de.philw.automaticcraftingtable.manager.CraftingTableManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -202,8 +201,7 @@ public class RecipeUtil {
         return clean;
     }
 
-    private Recipe cacheRecipe;
-    private ArrayList<ItemStack> cacheIngredientList;
+//    private  HashMap<List<ItemStack>, ArrayList<ItemStack>> cacheIngredientLists = new HashMap<>();
 
     /**
      * This method returns the ingredients from the recipe in the workbench. Unnecessary items in the workbench will
@@ -213,58 +211,47 @@ public class RecipeUtil {
      */
 
     public ArrayList<ItemStack> getIngredientList(Location location) {
+        List<ItemStack> damagedIngredientList;
         if (recipe instanceof ShapelessRecipe) {
-            return (ArrayList<ItemStack>) ((ShapelessRecipe) recipe).getIngredientList();
-        } else { // If it's ShapedRecipe
-            if (cacheRecipe != null && cacheRecipe == recipe) {
-                return cacheIngredientList;
-            }
-            ArrayList<ItemStack> ingredientList = new ArrayList<>();
-            ShapedRecipe shapedRecipe = (ShapedRecipe) recipe;
-            Map<Character, ItemStack> ingredientMap = shapedRecipe.getIngredientMap();
-            int itemInRecipe = 1;
-            boolean changeAble = isChangeableRecipe(automaticCraftingTable.getCraftingTableManager(), location);
-            for (int index = 0; index < 9; index++) {
-                ItemStack itemStack = automaticCraftingTable.getCraftingTableManager().getItemFromIndex(location,
-                        index);
-                if (itemStack == null) {
-                    continue;
-                }
-                // This is for recipes like craftingTables
-                ItemStack realAmountItemStack = ingredientMap.get(Objects.requireNonNull(getCharForNumber(itemInRecipe)).toLowerCase().toCharArray()[0]);
-                if (changeAble && realAmountItemStack == null) {
-                    // this is for items like a bucket
-                    realAmountItemStack = ingredientMap.get(Objects.requireNonNull(getCharForNumber(itemInRecipe+1)).toLowerCase().toCharArray()[0]);
-                }
-                if (realAmountItemStack != null) {
-                    itemStack.setAmount(realAmountItemStack.getAmount());
-                } else {
-                    // This is for recipes like furnace or chest or similar
-                    itemStack.setAmount(ingredientMap.get(
-                            Objects.requireNonNull(getCharForNumber(index + 1)).toLowerCase().toCharArray()[0]).getAmount());
-                }
-                itemInRecipe++;
-                ingredientList.add(itemStack);
-            }
-            cacheIngredientList = StackItems.combine(ingredientList);
-            cacheRecipe = recipe;
-            return cacheIngredientList;
+            damagedIngredientList = ((ShapelessRecipe)recipe).getIngredientList();
+        } else {
+            damagedIngredientList = new ArrayList<>(((ShapedRecipe)recipe).getIngredientMap().values());
         }
-    }
 
-    private String getCharForNumber(int i) {
-        return i > 0 && i < 27 ? String.valueOf((char) (i + 64)) : null;
+
+//        for (List<ItemStack> cacheDamagedIngredientList: cacheIngredientLists.keySet()) { Old
+//            if (cacheDamagedIngredientList.equals(damagedIngredientList)) {
+//                return cacheIngredientLists.get(damagedIngredientList);
+//            }
+//        }
+
+
+
+        ArrayList<Integer> amountFromItem = new ArrayList<>();
+        ArrayList<ItemStack> ingredientList = new ArrayList<>();
+        for (ItemStack itemStack: damagedIngredientList) {
+            if (itemStack == null) {
+                continue;
+            }
+            amountFromItem.add(itemStack.getAmount());
+        }
+        int countedItems = 0;
+        for (int index = 0; index < 9; index++) {
+            ItemStack itemStack = automaticCraftingTable.getCraftingTableManager().getItemFromIndex(location, index);
+            if (itemStack == null) {
+                continue;
+            }
+            itemStack.setAmount(amountFromItem.get(countedItems));
+            ingredientList.add(itemStack);
+            countedItems++;
+        }
+
+//        cacheIngredientLists.put(damagedIngredientList, StackItems.combine(ingredientList));
+        return StackItems.combine(ingredientList);
     }
 
     public Map<List<ItemStack>, ItemStack> getCache() {
         return cache;
-    }
-
-    private boolean isChangeableRecipe(CraftingTableManager craftingTableManager, Location location) {
-        return (craftingTableManager.getItemFromIndex(location, 0) == null && craftingTableManager.getItemFromIndex(location, 1) == null
-            && craftingTableManager.getItemFromIndex(location, 2) == null) || (craftingTableManager.getItemFromIndex(location, 6) == null
-                && craftingTableManager.getItemFromIndex(location, 7) == null
-                && craftingTableManager.getItemFromIndex(location, 8) == null);
     }
 
 }

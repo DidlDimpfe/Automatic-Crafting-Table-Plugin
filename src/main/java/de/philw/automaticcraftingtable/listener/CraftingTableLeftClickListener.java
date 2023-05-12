@@ -12,11 +12,11 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
-public class CraftingTableRightClickListener implements Listener {
+public class CraftingTableLeftClickListener implements Listener {
 
     private final AutomaticCraftingTable automaticCraftingTable;
 
-    public CraftingTableRightClickListener(AutomaticCraftingTable automaticCraftingTable) {
+    public CraftingTableLeftClickListener(AutomaticCraftingTable automaticCraftingTable) {
         this.automaticCraftingTable = automaticCraftingTable;
     }
 
@@ -49,8 +49,7 @@ public class CraftingTableRightClickListener implements Listener {
         // To here it is requested
 
         if (ConfigManager.getUINeedPermission()) {
-
-            if (!player.hasPermission("crafting-table-ui")) {
+            if (!player.hasPermission("act.ui")) {
                 return;
             }
         }

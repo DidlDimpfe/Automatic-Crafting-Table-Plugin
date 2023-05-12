@@ -4,7 +4,7 @@ import de.philw.automaticcraftingtable.holder.RegisteredCraftingTableHolder;
 import de.philw.automaticcraftingtable.holder.UsedRecipesHolder;
 import de.philw.automaticcraftingtable.listener.BreakBlockListener;
 import de.philw.automaticcraftingtable.listener.CraftingTableEditUIListener;
-import de.philw.automaticcraftingtable.listener.CraftingTableRightClickListener;
+import de.philw.automaticcraftingtable.listener.CraftingTableLeftClickListener;
 import de.philw.automaticcraftingtable.manager.ConfigManager;
 import de.philw.automaticcraftingtable.manager.CraftingTableManager;
 import de.philw.automaticcraftingtable.task.CheckHopperTask;
@@ -30,7 +30,7 @@ public final class AutomaticCraftingTable extends JavaPlugin {
         }
         craftingTableManager = new CraftingTableManager(this);
         recipeUtil = new RecipeUtil(this);
-        Bukkit.getPluginManager().registerEvents(new CraftingTableRightClickListener(this), this);
+        Bukkit.getPluginManager().registerEvents(new CraftingTableLeftClickListener(this), this);
         Bukkit.getPluginManager().registerEvents(new CraftingTableEditUIListener(this), this);
         Bukkit.getPluginManager().registerEvents(new BreakBlockListener(this), this);
 

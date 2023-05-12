@@ -41,10 +41,10 @@ public class UsedRecipesHolder extends PlaceholderExpansion {
     public @Nullable String onPlaceholderRequest(Player player, @NotNull String params) {
         StringBuilder builder = new StringBuilder();
         List<ItemStack> used = new ArrayList<>();
-        for (var entry: automaticCraftingTable.getRecipeUtil().getCache().entrySet()) {
-            if (!used.contains(entry.getValue())) {
-                used.add(entry.getValue());
-                builder.append(entry.getValue()).append(", ");
+        for (ItemStack itemStack: automaticCraftingTable.getRecipeUtil().getCache().values()) {
+            if (!used.contains(itemStack)) {
+                used.add(itemStack);
+                builder.append(itemStack).append(", ");
             }
         }
 

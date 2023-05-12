@@ -47,7 +47,7 @@ crafting-table-ui-need-permission: false</pre>
 <p>The field "crafting-table-ui-display" is the menu name of the menu that opens when you shift and left-click on a crafting table. Color codes supported.</p>
 <p>The field "crafting-table-ui-space-display" is the name of the Black-Stained-Glass-Panes which serve as  a placeholder of the menu that opens when you shift and left-click on a crafting table. Color codes supported.</p>
 <p>The field "crafting-table-timer" is a number of the time how long your crafting table needs to craft items. The number is in minecraft ticks. For instance: 20 minecraft ticks = 1 second.</p>
-<p>The field "crafting-table-ui-need-permission" can be set either to true or false to make players need to have the "crafting-table-ui" permission to open the automatic crafting table ui.</p>
+<p>The field "crafting-table-ui-need-permission" can be set either to true or false to make players need to have the "act.ui" permission to open the automatic crafting table ui.</p>
 
 <h2>PlaceholderAPI</h2>
 
