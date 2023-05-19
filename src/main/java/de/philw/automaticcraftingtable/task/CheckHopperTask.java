@@ -1,12 +1,11 @@
 package de.philw.automaticcraftingtable.task;
 
 import de.philw.automaticcraftingtable.AutomaticCraftingTable;
+import de.philw.automaticcraftingtable.manager.ConfigManager;
 import de.philw.automaticcraftingtable.manager.CraftingTableManager;
 import de.philw.automaticcraftingtable.util.Direction;
 import de.philw.automaticcraftingtable.util.StackItems;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.Hopper;
 import org.bukkit.inventory.ItemStack;
@@ -18,11 +17,9 @@ import java.util.Objects;
 public class CheckHopperTask implements Runnable {
 
     private final AutomaticCraftingTable automaticCraftingTable;
-    private final CraftingTableManager craftingTableManager;
 
     public CheckHopperTask(AutomaticCraftingTable automaticCraftingTable) {
         this.automaticCraftingTable = automaticCraftingTable;
-        this.craftingTableManager = automaticCraftingTable.getCraftingTableManager();
     }
 
     /**
@@ -33,10 +30,10 @@ public class CheckHopperTask implements Runnable {
 
     @Override
     public void run() {
-        for (String savedLocations : automaticCraftingTable.getCraftingTableManager().getLocations()) {
-            Location location = craftingTableManager.getLocationFromSavedString(savedLocations);
+        for (String string: automaticCraftingTable.getCraftingTableManager().getLocations()) {
+            Location location = automaticCraftingTable.getCraftingTableManager().getLocationFromSavedString(string);
             if (location == null) {
-                continue;
+                return;
             }
             Block craftingTable = Objects.requireNonNull(location.getWorld()).getBlockAt(location);
             if (craftingTable.getType() != Material.CRAFTING_TABLE) {
@@ -86,20 +83,31 @@ public class CheckHopperTask implements Runnable {
             }
 
             if (accepted) {
-                toHopper.getInventory().addItem(wantItemStack);
-                for (ItemStack itemStack : ingredientList) {
-                    for (int i = 1; i<=itemStack.getAmount(); i++) {
-                        for (Hopper fromHopper: fromHoppers) {
-                            ItemStack testItemStack = itemStack.clone();
-                            testItemStack.setAmount(1);
-                            if (fromHopper.getInventory().containsAtLeast(testItemStack, 1)) {
-                                fromHopper.getInventory().removeItem(testItemStack);
+                Bukkit.getScheduler().runTaskLater(automaticCraftingTable, () ->  { // It's run later so all crafting tables know what items they have to put
+                    // in what hopper, and then they can do that after every crafting table knows that. Without this a chain of crafting tables could
+                    // craft the result in one passage.
+                    toHopper.getInventory().addItem(wantItemStack);
+                    for (ItemStack itemStack : ingredientList) {
+                        for (int i = 1; i<=itemStack.getAmount(); i++) {
+                            for (Hopper fromHopper: fromHoppers) {
+                                ItemStack testItemStack = itemStack.clone();
+                                testItemStack.setAmount(1);
+                                if (fromHopper.getInventory().containsAtLeast(testItemStack, 1)) {
+                                    fromHopper.getInventory().removeItem(testItemStack);
+                                }
                             }
                         }
                     }
-                }
+                    if (ConfigManager.getSoundFeedbackEnabled()) {
+                        location.getWorld().playSound(location, Sound.ENTITY_PLAYER_LEVELUP, 1F, 2F);
+                    }
+                    if (ConfigManager.getVisualFeedbackEnabled()) {
+                        for (Location loc : getLocationsWhereToSpawnParticles(craftingTable.getLocation()))
+                            Objects.requireNonNull(loc.getWorld()).spawnParticle(Particle.REDSTONE, loc, 2, 0, 0, 0, 0,
+                                    new Particle.DustOptions(Color.LIME, 0.2F));
+                    }
+                }, 1);
             }
-
         }
     }
 
@@ -270,6 +278,36 @@ public class CheckHopperTask implements Runnable {
             }
         }
         return false;
+    }
+
+    /**
+     * @return the locations from a block where particles should be spawned.
+     */
+
+    private List<Location> getLocationsWhereToSpawnParticles(Location craftingTableLocation) {
+        List<Location> locationsWhereToSpawnParticles = new ArrayList<>();
+        World world = craftingTableLocation.getWorld();
+        double minX = craftingTableLocation.getBlockX();
+        double minY = craftingTableLocation.getBlockY();
+        double minZ = craftingTableLocation.getBlockZ();
+        double maxX = craftingTableLocation.getBlockX() + 1;
+        double maxY = craftingTableLocation.getBlockY() + 1;
+        double maxZ = craftingTableLocation.getBlockZ() + 1;
+
+        for (double x = minX; x <= maxX; x = Math.round((x + 0.05) * 1e2) / 1e2) {
+            for (double y = minY; y <= maxY; y = Math.round((y + 0.05) * 1e2) / 1e2) {
+                for (double z = minZ; z <= maxZ; z = Math.round((z + 0.05) * 1e2) / 1e2) {
+                    int components = 0;
+                    if (x == minX || x == maxX) components++;
+                    if (y == minY || y == maxY) components++;
+                    if (z == minZ || z == maxZ) components++;
+                    if (components >= 2) {
+                        locationsWhereToSpawnParticles.add(new Location(world, x, y, z));
+                    }
+                }
+            }
+        }
+        return locationsWhereToSpawnParticles;
     }
 
 }

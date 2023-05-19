@@ -32,14 +32,15 @@ public class BreakBlockListener implements Listener {
         if (!craftingTableManager.isCraftingTableRegistered(craftingTable.getLocation())) {
             return;
         }
-
+        if (blockBreakEvent.isCancelled()) {
+            return;
+        }
         for (ItemStack itemStack : craftingTableManager.getItemsInCraftingTable(craftingTable.getLocation())) {
             craftingTable.getWorld().dropItemNaturally(craftingTable.getLocation(), itemStack);
         }
 
         craftingTableManager.removeCraftingTable(craftingTable.getLocation());
         craftingTableManager.saveCraftingTables();
-
     }
 
 }

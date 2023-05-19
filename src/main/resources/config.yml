@@ -6,3 +6,5 @@ crafting-table-ui-display: 'Automatic Crafting Table Recipe'
 crafting-table-ui-space-display: 'space'
 crafting-table-timer: 4
 crafting-table-ui-need-permission: false
+crafting-table-visual-feedback-enabled: true
+crafting-table-sound-feedback-enabled: true

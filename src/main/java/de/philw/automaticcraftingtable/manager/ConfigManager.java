@@ -42,6 +42,14 @@ public class ConfigManager {
         return config.getBoolean("crafting-table-ui-need-permission");
     }
 
+    public static boolean getVisualFeedbackEnabled() {
+        return config.getBoolean("crafting-table-visual-feedback-enabled");
+    }
+
+    public static boolean getSoundFeedbackEnabled() {
+        return config.getBoolean("crafting-table-sound-feedback-enabled");
+    }
+
     /**
      * This method adds a field, if the field is not in the config, to the config with the default value
      */
@@ -61,6 +69,12 @@ public class ConfigManager {
         }
         if (!config.isSet("crafting-table-ui-need-permission")) {
             config.set("crafting-table-ui-need-permission", Objects.requireNonNull(config.getDefaults()).get("crafting-table-ui-need-permission"));
+        }
+        if (!config.isSet("crafting-table-visual-feedback-enabled")) {
+            config.set("crafting-table-visual-feedback-enabled", Objects.requireNonNull(config.getDefaults()).get("crafting-table-visual-feedback-enabled"));
+        }
+        if (!config.isSet("crafting-table-sound-feedback-enabled")) {
+            config.set("crafting-table-sound-feedback-enabled", Objects.requireNonNull(config.getDefaults()).get("crafting-table-sound-feedback-enabled"));
         }
         try {
             config.save(new File(automaticCraftingTable.getDataFolder(), "config.yml"));
