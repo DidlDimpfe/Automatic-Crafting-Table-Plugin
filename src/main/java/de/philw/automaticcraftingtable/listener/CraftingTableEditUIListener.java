@@ -6,11 +6,14 @@ import de.philw.automaticcraftingtable.manager.CraftingTableManager;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.persistence.PersistentDataType;
 
 import java.util.Objects;
 
@@ -20,32 +23,6 @@ public class CraftingTableEditUIListener implements Listener {
 
     public CraftingTableEditUIListener(AutomaticCraftingTable automaticCraftingTable) {
         this.automaticCraftingTable = automaticCraftingTable;
-    }
-
-    /**
-     * This method will cancel the inventory click event, if the player clicks on a space block.
-     */
-
-    @EventHandler
-    public void onCraftingTableEditUIGlassPaneClicked(InventoryClickEvent inventoryClickEvent) {
-        if (inventoryClickEvent.getClickedInventory() == null) {
-            return;
-        }
-        if (!inventoryClickEvent.getView().getTitle().equals(ChatColor.translateAlternateColorCodes('&',
-                ConfigManager.getCraftingTableDisplay()))) {
-            return;
-        }
-        if (inventoryClickEvent.getClickedInventory() != inventoryClickEvent.getInventory()) {
-            return;
-        }
-        if (inventoryClickEvent.getCurrentItem() != null) {
-            ItemStack itemStack = inventoryClickEvent.getCurrentItem();
-            if (itemStack.getType() == Material.BLACK_STAINED_GLASS_PANE &&
-                    Objects.requireNonNull(itemStack.getItemMeta()).getDisplayName().
-                            equals(ChatColor.translateAlternateColorCodes('&', ConfigManager.getSpaceDisplay()))) {
-                inventoryClickEvent.setCancelled(true);
-            }
-        }
     }
 
     /**
@@ -59,15 +36,16 @@ public class CraftingTableEditUIListener implements Listener {
             return;
         }
         CraftingTableManager craftingTableManager = automaticCraftingTable.getCraftingTableManager();
-        Location location = craftingTableManager.getLocationFromSavedString(
-                Objects.requireNonNull(Objects.requireNonNull(inventoryCloseEvent.getInventory().getItem(0)).
-                        getItemMeta()).getLocalizedName());
+        Player player = (Player) inventoryCloseEvent.getPlayer();
+        Location location = automaticCraftingTable.getCraftingTableManager().getLocationFromSavedString(
+                player.getPersistentDataContainer().get(new NamespacedKey(automaticCraftingTable, player.getUniqueId().toString()), PersistentDataType.STRING)
+        );
         boolean empty = true;
         // Get the items from the inventory and store it in the craftingTable.yml
-        for (int bigInventoryIndex : new int[]{3, 4, 5, 12, 13, 14, 21, 22, 23}) {
-            ItemStack itemStack = inventoryCloseEvent.getInventory().getItem(bigInventoryIndex);
+        for (int index = 0; index < 9; index++) {
+            ItemStack itemStack = inventoryCloseEvent.getInventory().getItem(index);
             craftingTableManager.setItemToIndex(location,
-                    craftingTableManager.castFromBigInventoryToSmallInventory(bigInventoryIndex),
+                    index,
                     itemStack);
             if (itemStack != null) {
                 empty = false;

@@ -58,7 +58,7 @@ public class CraftingTableLeftClickListener implements Listener {
 
         CraftingTableManager craftingTableManager = automaticCraftingTable.getCraftingTableManager();
 
-        new CraftingTableEditUI(player, craftingTableManager, craftingTable,
+        new CraftingTableEditUI(player, automaticCraftingTable, craftingTable,
                 craftingTableManager.isCraftingTableRegistered(craftingTable.getLocation()));
     }
 }

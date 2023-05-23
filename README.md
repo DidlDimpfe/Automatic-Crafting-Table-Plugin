@@ -17,11 +17,11 @@
 <h2>How to use it</h2>
 <p>Simply shift and left-click on a crafting table and a new menu pops up:</p>
 
-<img src="https://cdn.modrinth.com/data/SKieaOni/images/a2c1b0115c98178d570633002ef521a1fae02a91.png"  alt=""/>
+<img src="https://cdn.modrinth.com/data/SKieaOni/images/e89da135773a87b520d3788368632e4074bd22f9.png" alt=""/>
 
 <p>Now put items in this menu for any crafting recipe you want (custom recipes included). For instance, I use a block of iron:</p>
 
-<img src="https://cdn.modrinth.com/data/SKieaOni/images/34f682a24e19c832b9b73688d521020d93611134.png"  alt=""/>
+<img src="https://cdn.modrinth.com/data/SKieaOni/images/d4de8f868097d2ca8df78b23efedda7ae56531c3.png"  alt=""/>
 
 <p>In the next step, connect your crafting table you just modified with a hopper system (the first hopper must go on the crafting table, the second hopper must go in any other direction except the where the crafting table is located). For example:</p>
 
@@ -52,6 +52,7 @@ crafting-table-sound-feedback-enabled: true</pre>
 <p>The field "crafting-table-ui-need-permission" can be set either to true or false to make players need to have the "act.ui" permission to open the automatic crafting table ui.</p>
 <p>The field "crafting-table-visual-feedback-enabled" enables/disables the particles that spawn when an item has been successfully automatically crafted.</p>
 <p>The field "crafting-table-sound-feedback-enabled" enables/disables the sound that plays when an item has been successfully automatically crafted.</p>
+<p>You can also make more than one hopper face into the crafting table. They will work together with the ingredients to craft the item you want. For example, one hopper has 2 sticks and the other has 3 diamonds for a diamond pickaxe and it would work!</p>
 
 <h2>PlaceholderAPI</h2>
 

@@ -78,7 +78,7 @@ public class CheckHopperTask implements Runnable {
 
             for (ItemStack itemStack : ingredientList) {
                 if (!itemStackListContainsAtLeast(itemsInFromHoppers, itemStack)) {
-                        accepted = false;
+                    accepted = false;
                 }
             }
 

@@ -120,43 +120,12 @@ public class CraftingTableManager {
      */
 
     public Location getLocationFromSavedString(String string) {
-
         String[] info = string.split(",");
         World world = Bukkit.getWorld(info[0]);
         int x = Integer.parseInt(info[1]);
         int y = Integer.parseInt(info[2]);
         int z = Integer.parseInt(info[3]);
         return new Location(world, x, y, z);
-    }
-
-    /**
-     * This method converts the index from a 0-8 inventory to a 0-27 inventory.
-     */
-
-    public int castFromSmallInventoryToBigInventory(int smallInventoryIndex) {
-        if (smallInventoryIndex >= 0 && smallInventoryIndex <= 2) {
-            return smallInventoryIndex + 3;
-        } else if (smallInventoryIndex >= 3 && smallInventoryIndex <= 5) {
-            return smallInventoryIndex + 9;
-        } else if (smallInventoryIndex >= 6 && smallInventoryIndex <= 8) {
-            return smallInventoryIndex + 15;
-        }
-        return 0;
-    }
-
-    /**
-     * This method converts the index from a 0-27 inventory to a 0-8 inventory.
-     */
-
-    public int castFromBigInventoryToSmallInventory(int bigInventoryIndex) {
-        if (bigInventoryIndex >= 3 && bigInventoryIndex <= 5) {
-            return bigInventoryIndex - 3;
-        } else if (bigInventoryIndex >= 12 && bigInventoryIndex <= 14) {
-            return bigInventoryIndex - 9;
-        } else if (bigInventoryIndex >= 21 && bigInventoryIndex <= 23) {
-            return bigInventoryIndex - 15;
-        }
-        return 0;
     }
 
     /**

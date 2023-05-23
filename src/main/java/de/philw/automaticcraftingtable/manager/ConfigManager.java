@@ -30,10 +30,6 @@ public class ConfigManager {
         return config.getBoolean("enabled");
     }
 
-    public static String getSpaceDisplay() {
-        return config.getString("crafting-table-ui-space-display");
-    }
-
     public static int getTimer() {
         return config.getInt("crafting-table-timer");
     }
