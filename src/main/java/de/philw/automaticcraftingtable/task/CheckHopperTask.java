@@ -65,7 +65,7 @@ public class CheckHopperTask implements Runnable {
                 continue;
             }
 
-            Hopper toHopper = getNextTarget(craftingTable, wantItemStack);
+            Hopper toHopper = getNextTarget(craftingTable, wantItemStack.clone());
 
             if (toHopper == null) {
                 continue;

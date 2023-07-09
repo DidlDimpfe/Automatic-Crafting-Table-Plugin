@@ -9,6 +9,7 @@ import de.philw.automaticcraftingtable.manager.ConfigManager;
 import de.philw.automaticcraftingtable.manager.CraftingTableManager;
 import de.philw.automaticcraftingtable.task.CheckHopperTask;
 import de.philw.automaticcraftingtable.util.RecipeUtil;
+import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -19,6 +20,8 @@ public final class AutomaticCraftingTable extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        new Metrics(this, 19035);
+
         ConfigManager.setUpConfig(this);
         if (!ConfigManager.getEnabled()) {
             System.out.println(getMessageBeginning() + "Plugin has not been enabled. Change it in config.yml!");

@@ -1,7 +1,6 @@
 package de.philw.automaticcraftingtable.util;
 
 import de.philw.automaticcraftingtable.AutomaticCraftingTable;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.inventory.*;
@@ -11,7 +10,7 @@ import java.util.*;
 public class RecipeUtil {
     private ArrayList<Recipe> recipes;
     private final AutomaticCraftingTable automaticCraftingTable;
-    private Recipe recipe;
+    private List<ItemStack> damagedIngredientList;
 
     public RecipeUtil(AutomaticCraftingTable automaticCraftingTable) {
         this.automaticCraftingTable = automaticCraftingTable;
@@ -41,7 +40,8 @@ public class RecipeUtil {
 
     public ItemStack getCraftResult(List<ItemStack> items) {
         if (cache.containsKey(items)) {
-            recipe = Bukkit.getRecipesFor(cache.get(items)).get(0); // This is because we later need to get the
+            damagedIngredientList = items;
+             // This is because we later need to get the
             // recipe for the item but when a
             // false recipe is in cache for example because another crafting table the recipe still gets updated
             return cache.get(items);
@@ -73,14 +73,14 @@ public class RecipeUtil {
                         : null;
                 if (result != null) {
                     cache.put(items, result);
-                    this.recipe = recipe;
+                    damagedIngredientList = ((ShapelessRecipe) recipe).getIngredientList();
                     return result;
                 }
             } else if (recipe instanceof ShapedRecipe) { // Shaped recipe
                 result = matchesShaped((ShapedRecipe) recipe, items) ? recipe.getResult() : null;
                 if (result != null) {
                     cache.put(items, result);
-                    this.recipe = recipe;
+                    damagedIngredientList = new ArrayList<>(((ShapedRecipe)recipe).getIngredientMap().values());
                     return result;
                 }
             }
@@ -211,25 +211,9 @@ public class RecipeUtil {
      */
 
     public ArrayList<ItemStack> getIngredientList(Location location) {
-        List<ItemStack> damagedIngredientList;
-        if (recipe instanceof ShapelessRecipe) {
-            damagedIngredientList = ((ShapelessRecipe)recipe).getIngredientList();
-        } else {
-            damagedIngredientList = new ArrayList<>(((ShapedRecipe)recipe).getIngredientMap().values());
-        }
-
-
-//        for (List<ItemStack> cacheDamagedIngredientList: cacheIngredientLists.keySet()) { Old
-//            if (cacheDamagedIngredientList.equals(damagedIngredientList)) {
-//                return cacheIngredientLists.get(damagedIngredientList);
-//            }
-//        }
-
-
-
         ArrayList<Integer> amountFromItem = new ArrayList<>();
         ArrayList<ItemStack> ingredientList = new ArrayList<>();
-        for (ItemStack itemStack: damagedIngredientList) {
+        for (ItemStack itemStack: Objects.requireNonNull(damagedIngredientList)) {
             if (itemStack == null) {
                 continue;
             }
@@ -245,8 +229,6 @@ public class RecipeUtil {
             ingredientList.add(itemStack);
             countedItems++;
         }
-
-//        cacheIngredientLists.put(damagedIngredientList, StackItems.combine(ingredientList));
         return StackItems.combine(ingredientList);
     }
 
