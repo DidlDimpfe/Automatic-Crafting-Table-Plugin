@@ -1,7 +1,10 @@
 name: AutomaticCraftingTable
-version: '1.3.2'
+version: '1.4.0'
 main: de.philw.automaticcraftingtable.AutomaticCraftingTable
 api-version: 1.14
 authors: [ Phil ]
 description: You can use a crafting table in a hopper system to automatically craft
   items. Use shift and left click on the crafting table to configure the settings.
+commands:
+  getACT:
+    permission: "act"

@@ -5,12 +5,10 @@ import de.philw.automaticcraftingtable.manager.ConfigManager;
 import de.philw.automaticcraftingtable.manager.CraftingTableManager;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
@@ -32,13 +30,13 @@ public class CraftingTableEditUIListener implements Listener {
     @EventHandler
     public void onInventoryClose(InventoryCloseEvent inventoryCloseEvent) {
         if (!inventoryCloseEvent.getView().getTitle().equals(ChatColor.translateAlternateColorCodes('&',
-                ConfigManager.getCraftingTableDisplay()))) {
+                ConfigManager.getCraftingTableInventoryDisplay()))) {
             return;
         }
         CraftingTableManager craftingTableManager = automaticCraftingTable.getCraftingTableManager();
         Player player = (Player) inventoryCloseEvent.getPlayer();
         Location location = automaticCraftingTable.getCraftingTableManager().getLocationFromSavedString(
-                player.getPersistentDataContainer().get(new NamespacedKey(automaticCraftingTable, player.getUniqueId().toString()), PersistentDataType.STRING)
+                Objects.requireNonNull(player.getPersistentDataContainer().get(new NamespacedKey(automaticCraftingTable, player.getUniqueId().toString()), PersistentDataType.STRING))
         );
         boolean empty = true;
         // Get the items from the inventory and store it in the craftingTable.yml

@@ -2,6 +2,7 @@ package de.philw.automaticcraftingtable.listener;
 
 import de.philw.automaticcraftingtable.AutomaticCraftingTable;
 import de.philw.automaticcraftingtable.manager.CraftingTableManager;
+import de.philw.automaticcraftingtable.util.ACTBlockUTIL;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
@@ -29,10 +30,14 @@ public class BreakBlockListener implements Listener {
             return;
         }
         CraftingTableManager craftingTableManager = automaticCraftingTable.getCraftingTableManager();
-        if (!craftingTableManager.isCraftingTableRegistered(craftingTable.getLocation())) {
+        if (blockBreakEvent.isCancelled()) {
             return;
         }
-        if (blockBreakEvent.isCancelled()) {
+        if (craftingTable.hasMetadata(ACTBlockUTIL.metadataKey)) {
+            blockBreakEvent.setDropItems(false);
+            craftingTable.getWorld().dropItemNaturally(craftingTable.getLocation(), ACTBlockUTIL.getACT());
+        }
+        if (!craftingTableManager.isCraftingTableRegistered(craftingTable.getLocation())) {
             return;
         }
         for (ItemStack itemStack : craftingTableManager.getItemsInCraftingTable(craftingTable.getLocation())) {

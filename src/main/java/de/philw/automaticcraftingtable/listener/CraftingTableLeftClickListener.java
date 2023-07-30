@@ -4,6 +4,7 @@ import de.philw.automaticcraftingtable.AutomaticCraftingTable;
 import de.philw.automaticcraftingtable.manager.ConfigManager;
 import de.philw.automaticcraftingtable.manager.CraftingTableManager;
 import de.philw.automaticcraftingtable.ui.CraftingTableEditUI;
+import de.philw.automaticcraftingtable.util.ACTBlockUTIL;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -45,14 +46,11 @@ public class CraftingTableLeftClickListener implements Listener {
         if (!playerInteractEvent.getAction().equals(Action.LEFT_CLICK_BLOCK)) {
             return;
         }
+        if (ConfigManager.isSeparateFromOtherCraftingTables() && !craftingTable.hasMetadata(ACTBlockUTIL.metadataKey)) {
+            return;
+        }
 
         // To here it is requested
-
-        if (ConfigManager.getUINeedPermission()) {
-            if (!player.hasPermission("act.ui")) {
-                return;
-            }
-        }
 
         playerInteractEvent.setCancelled(true);
 

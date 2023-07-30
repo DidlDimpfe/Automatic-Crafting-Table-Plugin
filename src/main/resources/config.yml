@@ -4,6 +4,11 @@
 enabled: true
 crafting-table-ui-display: 'Automatic Crafting Table Recipe'
 crafting-table-timer: 4
-crafting-table-ui-need-permission: false
 crafting-table-visual-feedback-enabled: true
 crafting-table-sound-feedback-enabled: true
+separate-from-other-crafting-tables: false
+automatic-crafting-table-item-display: "&aAutomatic-Crafting-Table"
+automatic-crafting-table-item-lore:
+  - "&eUse this Crafting Table in a "
+  - "&ehopper system to automatically "
+  - "&ecraft items"
