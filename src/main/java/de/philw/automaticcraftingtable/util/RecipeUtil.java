@@ -3,7 +3,9 @@ package de.philw.automaticcraftingtable.util;
 import de.philw.automaticcraftingtable.AutomaticCraftingTable;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.*;
+import org.bukkit.inventory.meta.FireworkMeta;
 
 import java.util.*;
 
@@ -25,9 +27,34 @@ public class RecipeUtil {
         Iterator<Recipe> recipeIterator = automaticCraftingTable.getServer().recipeIterator();
         while (recipeIterator.hasNext()) {
             Recipe recipe = recipeIterator.next();
+            if (recipe.getResult().getType() == Material.FIREWORK_ROCKET)
+                continue; // skip firework recipe with no NBT
             recipes.add(recipe);
         }
+        recipes.addAll(getFireWorkRecipes());
         return recipes;
+    }
+
+    public ArrayList<Recipe> getFireWorkRecipes() {
+        ArrayList<Recipe> recipes = new ArrayList<>();
+
+        recipes.add(getFireWorkRecipe(1));
+        recipes.add(getFireWorkRecipe(2));
+        recipes.add(getFireWorkRecipe(3));
+
+        return recipes;
+    }
+
+    private ShapelessRecipe getFireWorkRecipe(int power) {
+        ItemStack rocket = new ItemStack(Material.FIREWORK_ROCKET, 3);
+        FireworkMeta rocketMeta = (FireworkMeta) rocket.getItemMeta();
+        assert rocketMeta != null;
+        rocketMeta.setPower(power);
+        rocket.setItemMeta(rocketMeta);
+        ShapelessRecipe rocketRecipe = new ShapelessRecipe(new NamespacedKey(automaticCraftingTable, "de.philw.automaticcraftingtable.firework_rocket_" + power), rocket);
+        rocketRecipe.addIngredient(Material.PAPER);
+        rocketRecipe.addIngredient(2, Material.GUNPOWDER);
+        return rocketRecipe;
     }
 
     private final Map<List<ItemStack>, ItemStack> cache = new HashMap<>();
@@ -106,7 +133,7 @@ public class RecipeUtil {
                 return false;
         }
         items.removeAll(Arrays.asList(null, new ItemStack(Material.AIR)));
-        return items.size() == 0;
+        return items.isEmpty();
     }
 
     private boolean matchesShaped(ShapedRecipe recipe, List<ItemStack> items) {

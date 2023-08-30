@@ -44,7 +44,7 @@ public class CheckHopperTask implements Runnable {
 
             for (Hopper fromHopper: fromHoppers) {
                 for (ItemStack itemStack: fromHopper.getInventory().getContents()) {
-                    if (itemStack != null) itemsInFromHoppers.add(itemStack.clone()); // Without the .clone() are many errors!
+                    if (itemStack != null) itemsInFromHoppers.add(itemStack.clone());
                 }
             }
 
@@ -59,11 +59,7 @@ public class CheckHopperTask implements Runnable {
                         craftingTableManager.getItemFromIndex(craftingTable.getLocation(), index));
             }
 
-            ItemStack wantItemStack = automaticCraftingTable.getRecipeUtil().getCraftResult(craftingTableContents);
-
-            if (wantItemStack == null) {
-                continue;
-            }
+            ItemStack wantItemStack = automaticCraftingTable.getRecipeUtil().getCraftResult(craftingTableContents).clone();
 
             Hopper toHopper = getNextTarget(craftingTable, wantItemStack.clone());
 
@@ -121,9 +117,18 @@ public class CheckHopperTask implements Runnable {
 
     private boolean hopperIsNotFull(Hopper hopper, ItemStack wantItemStack) {
         List<ItemStack> storageContents = new ArrayList<>();
+        int itemStacksTheSameAsWantItemStack = 0;
+        int itemStacksTheSameAsWantItemsStackAmountOfTypes = 0;
         for (ItemStack isItemStack : hopper.getInventory().getStorageContents()) {
             if (isItemStack != null) {
                 storageContents.add(isItemStack);
+                ItemStack isItemsStackWithSameAmount = isItemStack.clone();
+                isItemsStackWithSameAmount.setAmount(wantItemStack.getAmount()); // To check how many itemStacks from the wantItemsStack are there to combine them
+                // from the want
+                if (isItemsStackWithSameAmount.isSimilar(wantItemStack)) {
+                    itemStacksTheSameAsWantItemStack += 1;
+                    itemStacksTheSameAsWantItemsStackAmountOfTypes += isItemStack.getAmount();
+                }
             }
         }
         if (storageContents.size() != 5) {
@@ -131,10 +136,13 @@ public class CheckHopperTask implements Runnable {
         }
         for (ItemStack isItemStack : storageContents) {
             if (isItemStack.getMaxStackSize() == isItemStack.getAmount()) continue;
-            wantItemStack.setAmount(isItemStack.getAmount());
-            if (wantItemStack.isSimilar(isItemStack)) {
+            if (!(wantItemStack.getAmount() + isItemStack.getAmount() > 64)) {
                 return true;
             }
+            if (itemStacksTheSameAsWantItemStack > 1) {
+                if (wantItemStack.getMaxStackSize() * itemStacksTheSameAsWantItemStack - wantItemStack.getAmount() >= itemStacksTheSameAsWantItemsStackAmountOfTypes) return true;
+            }
+
         }
         return false;
     }
