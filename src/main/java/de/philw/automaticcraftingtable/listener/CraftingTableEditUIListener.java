@@ -39,6 +39,9 @@ public class CraftingTableEditUIListener implements Listener {
                 Objects.requireNonNull(player.getPersistentDataContainer().get(new NamespacedKey(automaticCraftingTable, player.getUniqueId().toString()), PersistentDataType.STRING))
         );
         boolean empty = true;
+        if (!craftingTableManager.isCraftingTableRegistered(location)) {
+            craftingTableManager.addEmptyCraftingTable(location);
+        }
         // Get the items from the inventory and store it in the craftingTable.yml
         for (int index = 0; index < 9; index++) {
             ItemStack itemStack = inventoryCloseEvent.getInventory().getItem(index);
@@ -59,10 +62,6 @@ public class CraftingTableEditUIListener implements Listener {
             return;
         }
         // Store the changes
-        if (!craftingTableManager.isCraftingTableRegistered(location)) {
-            craftingTableManager.addEmptyCraftingTable(location);
-            craftingTableManager.saveCraftingTables();
-        }
         craftingTableManager.saveCraftingTables();
     }
 }

@@ -16,6 +16,7 @@ import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.IOException;
 import java.util.Objects;
 
 public final class AutomaticCraftingTable extends JavaPlugin {
@@ -41,7 +42,11 @@ public final class AutomaticCraftingTable extends JavaPlugin {
             Bukkit.getPluginManager().registerEvents(new PlaceACTListener(), this);
             Objects.requireNonNull(getCommand("getACT")).setExecutor(new GetACTCommand());
         }
-        craftingTableManager = new CraftingTableManager(this);
+        try {
+            craftingTableManager = new CraftingTableManager(this);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         recipeUtil = new RecipeUtil(this);
         Bukkit.getPluginManager().registerEvents(new CraftingTableLeftClickListener(this), this);
         Bukkit.getPluginManager().registerEvents(new CraftingTableEditUIListener(this), this);
@@ -52,6 +57,17 @@ public final class AutomaticCraftingTable extends JavaPlugin {
         Bukkit.getScheduler().runTaskTimer(this, new CheckHopperTask(this), timer, timer);
 
         Bukkit.getServer().getLogger().info(getMessageBeginning() + "Plugin has been enabled.");
+
+        if (ConfigManager.isSeparateFromOtherCraftingTables()) {
+            Bukkit.getScheduler().scheduleSyncDelayedTask(this, () -> {
+                craftingTableManager.registerAutomaticCraftingTables();
+            });
+        }
+    }
+
+    @Override
+    public void onDisable() {
+        craftingTableManager.unregisterAutomaticCraftingTables();
     }
 
     public CraftingTableManager getCraftingTableManager() {

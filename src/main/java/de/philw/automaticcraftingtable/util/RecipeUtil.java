@@ -13,6 +13,7 @@ public class RecipeUtil {
     private ArrayList<Recipe> recipes;
     private final AutomaticCraftingTable automaticCraftingTable;
     private List<ItemStack> damagedIngredientList;
+    private final Map<List<ItemStack>, ItemStack> cache = new HashMap<>();
 
     public RecipeUtil(AutomaticCraftingTable automaticCraftingTable) {
         this.automaticCraftingTable = automaticCraftingTable;
@@ -53,11 +54,9 @@ public class RecipeUtil {
         rocket.setItemMeta(rocketMeta);
         ShapelessRecipe rocketRecipe = new ShapelessRecipe(new NamespacedKey(automaticCraftingTable, "de.philw.automaticcraftingtable.firework_rocket_" + power), rocket);
         rocketRecipe.addIngredient(Material.PAPER);
-        rocketRecipe.addIngredient(2, Material.GUNPOWDER);
+        rocketRecipe.addIngredient(power, Material.GUNPOWDER);
         return rocketRecipe;
     }
-
-    private final Map<List<ItemStack>, ItemStack> cache = new HashMap<>();
 
     /**
      * This method returns am Item from a crafting recipe or null
@@ -68,7 +67,7 @@ public class RecipeUtil {
     public ItemStack getCraftResult(List<ItemStack> items) {
         if (cache.containsKey(items)) {
             damagedIngredientList = items;
-             // This is because we later need to get the
+            // This is because we later need to get the
             // recipe for the item but when a
             // false recipe is in cache for example because another crafting table the recipe still gets updated
             return cache.get(items);

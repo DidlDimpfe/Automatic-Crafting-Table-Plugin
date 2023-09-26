@@ -4,7 +4,10 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.Material;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
@@ -14,6 +17,7 @@ import java.util.*;
 
 public class ItemStackSerializer {
     public static String serialize(ItemStack item) {
+        getAttributeModifiers(item);
         StringBuilder builder = new StringBuilder();
         builder.append(item.getType());
         if (item.getDurability() != 0) builder.append(":").append(item.getDurability());
@@ -29,10 +33,17 @@ public class ItemStackSerializer {
                 "|").append(color.getBlue());
         String owner = getOwner(item);
         if (owner != null) builder.append(" owner:").append(owner);
+        String attributes = getAttributeModifiers(item);
+        if (attributes != null) builder.append(attributes);
         return builder.toString();
     }
 
     public static ItemStack deserialize(String serializedItem) {
+        String attributes = null;
+        if (serializedItem.contains("*"))  {
+            attributes = serializedItem.split("\\*")[serializedItem.split("\\*").length-1];
+            serializedItem = serializedItem.split("\\*")[0];
+        }
         String[] strings = serializedItem.split(" ");
         Map<Enchantment, Integer> enchants = new HashMap<>();
         String[] args;
@@ -48,6 +59,9 @@ public class ItemStackSerializer {
         if (item.getType() == Material.AIR) {
             Bukkit.getLogger().info("Could not find a valid material for the item in \"" + serializedItem + "\"");
             return null;
+        }
+        if (attributes != null) {
+            setAttributeModifiers(item, attributes);
         }
         for (String str : strings) {
             args = str.split(":", 2);
@@ -139,6 +153,48 @@ public class ItemStackSerializer {
             item.setItemMeta(meta);
         } catch (Exception exception) {
             throw new RuntimeException(exception);
+        }
+    }
+
+    private static String getAttributeModifiers(ItemStack item) {
+        if (!item.hasItemMeta()) return null;
+        if (!Objects.requireNonNull(item.getItemMeta()).hasAttributeModifiers()) return null;
+        StringBuilder attributeModifiers = new StringBuilder("*");
+        for (var entry: Objects.requireNonNull(item.getItemMeta().getAttributeModifiers()).entries()) {
+            attributeModifiers.append(entry.getKey().name());
+            attributeModifiers.append(",");
+            attributeModifiers.append(entry.getValue().getUniqueId());
+            attributeModifiers.append(",");
+            attributeModifiers.append(entry.getValue().getName());
+            attributeModifiers.append(",");
+            attributeModifiers.append(entry.getValue().getAmount());
+            attributeModifiers.append(",");
+            attributeModifiers.append(entry.getValue().getOperation());
+            attributeModifiers.append(",");
+            attributeModifiers.append(entry.getValue().getSlot());
+            attributeModifiers.append("/");
+        }
+        return attributeModifiers.substring(0, attributeModifiers.length()-1) + "*";
+    }
+
+    private static void setAttributeModifiers(ItemStack item, String attributes) {
+        for (String attribute: attributes.split("/")) {
+            String[] details = attribute.split(",");
+            Attribute attributeName = Attribute.valueOf(details[0]);
+            UUID attributeModifierUUID = UUID.fromString(details[1]);
+            String attributeModifierName = details[2];
+            Double amount = Double.parseDouble(details[3]);
+            AttributeModifier.Operation operation = AttributeModifier.Operation.valueOf(details[4]);
+            EquipmentSlot slot = details[5].equals("null") ? null : EquipmentSlot.valueOf(details[5]);
+            ItemMeta itemMeta = item.getItemMeta();
+            if (slot != null) {
+                itemMeta.addAttributeModifier(attributeName, new AttributeModifier(attributeModifierUUID, attributeModifierName,
+                        amount, operation, slot));
+            } else {
+                itemMeta.addAttributeModifier(attributeName, new AttributeModifier(attributeModifierUUID, attributeModifierName,
+                        amount, operation));
+            }
+            item.setItemMeta(itemMeta);
         }
     }
 

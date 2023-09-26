@@ -59,7 +59,9 @@ public class CheckHopperTask implements Runnable {
                         craftingTableManager.getItemFromIndex(craftingTable.getLocation(), index));
             }
 
-            ItemStack wantItemStack = automaticCraftingTable.getRecipeUtil().getCraftResult(craftingTableContents).clone();
+            ItemStack wantItemStack = automaticCraftingTable.getRecipeUtil().getCraftResult(craftingTableContents);
+            if (wantItemStack == null) continue;
+            wantItemStack = wantItemStack.clone();
 
             Hopper toHopper = getNextTarget(craftingTable, wantItemStack.clone());
 
@@ -79,10 +81,11 @@ public class CheckHopperTask implements Runnable {
             }
 
             if (accepted) {
+                ItemStack finalWantItemStack = wantItemStack;
                 Bukkit.getScheduler().runTaskLater(automaticCraftingTable, () ->  { // It's run later so all crafting tables know what items they have to put
                     // in what hopper, and then they can do that after every crafting table knows that. Without this a chain of crafting tables could
                     // craft the result in one passage.
-                    toHopper.getInventory().addItem(wantItemStack);
+                    toHopper.getInventory().addItem(finalWantItemStack);
                     for (ItemStack itemStack : ingredientList) {
                         for (int i = 1; i<=itemStack.getAmount(); i++) {
                             for (Hopper fromHopper: fromHoppers) {

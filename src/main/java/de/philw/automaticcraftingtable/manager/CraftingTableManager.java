@@ -1,6 +1,7 @@
 package de.philw.automaticcraftingtable.manager;
 
 import de.philw.automaticcraftingtable.AutomaticCraftingTable;
+import de.philw.automaticcraftingtable.util.ACTBlockUTIL;
 import de.philw.automaticcraftingtable.util.ItemStackSerializer;
 import de.philw.automaticcraftingtable.util.StackItems;
 import org.bukkit.Bukkit;
@@ -18,14 +19,17 @@ import java.util.Set;
 @SuppressWarnings("ALL")
 public class CraftingTableManager {
 
-    private final File file;
+    private File file;
     private final YamlConfiguration craftingTables;
+    private final AutomaticCraftingTable automaticCraftingTable;
 
     /**
      * The constructor of the class will connect to craftingTables.yml or create it.
      */
 
-    public CraftingTableManager(AutomaticCraftingTable automaticCraftingTable) {
+    public CraftingTableManager(AutomaticCraftingTable automaticCraftingTable) throws IOException {
+
+        this.automaticCraftingTable = automaticCraftingTable;
 
         if (!automaticCraftingTable.getDataFolder().exists()) {
             automaticCraftingTable.getDataFolder().mkdir();
@@ -42,6 +46,31 @@ public class CraftingTableManager {
         }
 
         craftingTables = YamlConfiguration.loadConfiguration(file);
+
+        if (ConfigManager.isSeparateFromOtherCraftingTables() && !getLocations().isEmpty()) {
+            for (String string: getLocations()) {
+                if (!craftingTables.isSet(string + ".isACT")) {
+                    for (String location: getLocations()) {
+                        Location realLocation = getLocationFromSavedString(location);
+                        removeCraftingTable(realLocation);
+                    }
+                    saveCraftingTables();
+                    break;
+                }
+            }
+        } else {
+            for (String string: getLocations()) {
+                if (craftingTables.isSet(string + ".isACT")) {
+                    for (String location: getLocations()) {
+                        Location realLocation = getLocationFromSavedString(location);
+                        removeCraftingTable(realLocation);
+                    }
+                    saveCraftingTables();
+                    break;
+                }
+            }
+        }
+
     }
 
     /**
@@ -91,6 +120,9 @@ public class CraftingTableManager {
     public void addEmptyCraftingTable(Location location) {
         for (int i = 0; i < 9; i++) {
             craftingTables.set(getSavedLocation(location) + "." + i, "null");
+        }
+        if (ConfigManager.isSeparateFromOtherCraftingTables()) {
+            craftingTables.set(getSavedLocation(location) + "." + "isACT", true);
         }
     }
 
@@ -151,6 +183,9 @@ public class CraftingTableManager {
         for (int index = 0; index < 9; index++) {
             craftingTables.set(getSavedLocation(location) + "." + index, null);
         }
+        if (ConfigManager.isSeparateFromOtherCraftingTables()) {
+            craftingTables.set(getSavedLocation(location) + ".isACT", null);
+        }
         craftingTables.set(getSavedLocation(location), null);
     }
 
@@ -160,6 +195,25 @@ public class CraftingTableManager {
 
     public Set<String> getLocations() {
         return Objects.requireNonNull(craftingTables.getConfigurationSection("")).getKeys(false);
+    }
+
+    /**
+     * This methodered adds meta data to AutomaticCraftingTables, if separate-from-other-crafting-tables is true,
+     */
+    public void registerAutomaticCraftingTables() {
+        for (String location: getLocations()) {
+            Location realLocation = getLocationFromSavedString(location);
+            realLocation.getBlock().setMetadata(ACTBlockUTIL.metadataKey, ACTBlockUTIL.metadataValue);
+        }
+    }
+    /**
+     * This methodered removesd meta data from AutomaticCraftingTables, if separate-from-other-crafting-tables is true,
+     */
+    public void unregisterAutomaticCraftingTables() {
+        for (String location: getLocations()) {
+            Location realLocation = getLocationFromSavedString(location);
+            realLocation.getBlock().removeMetadata(ACTBlockUTIL.metadataKey, automaticCraftingTable);
+        }
     }
 
 }
