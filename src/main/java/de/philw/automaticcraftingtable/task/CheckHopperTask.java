@@ -63,6 +63,7 @@ public class CheckHopperTask implements Runnable {
             if (wantItemStack == null) continue;
             wantItemStack = wantItemStack.clone();
 
+
             Hopper toHopper = getNextTarget(craftingTable, wantItemStack.clone());
 
             if (toHopper == null) {
@@ -76,8 +77,10 @@ public class CheckHopperTask implements Runnable {
 
             for (ItemStack itemStack : ingredientList) {
                 if (!itemStackListContainsAtLeast(itemsInFromHoppers, itemStack)) {
-                    accepted = false;
+                        accepted = false;
+                        break;
                 }
+                itemsInFromHoppers.remove(itemStack);
             }
 
             if (accepted) {

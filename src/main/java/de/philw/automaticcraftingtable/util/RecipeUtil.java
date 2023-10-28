@@ -1,9 +1,11 @@
 package de.philw.automaticcraftingtable.util;
 
 import de.philw.automaticcraftingtable.AutomaticCraftingTable;
+import org.bukkit.DyeColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.entity.Item;
 import org.bukkit.inventory.*;
 import org.bukkit.inventory.meta.FireworkMeta;
 
@@ -32,17 +34,20 @@ public class RecipeUtil {
                 continue; // skip firework recipe with no NBT
             recipes.add(recipe);
         }
-        recipes.addAll(getFireWorkRecipes());
+        recipes.addAll(getExtraRecipes());
         return recipes;
     }
 
-    public ArrayList<Recipe> getFireWorkRecipes() {
-        ArrayList<Recipe> recipes = new ArrayList<>();
+    public List<Recipe> getExtraRecipes() {
+        // This method is needed for recipes the recipe iterator from the server doesn't deliver
+
+        List<Recipe> recipes = new ArrayList<>();
 
         recipes.add(getFireWorkRecipe(1));
         recipes.add(getFireWorkRecipe(2));
         recipes.add(getFireWorkRecipe(3));
 
+        recipes.addAll(getShulkerBoxRecipes());
         return recipes;
     }
 
@@ -56,6 +61,38 @@ public class RecipeUtil {
         rocketRecipe.addIngredient(Material.PAPER);
         rocketRecipe.addIngredient(power, Material.GUNPOWDER);
         return rocketRecipe;
+    }
+
+    private List<ShapelessRecipe> getShulkerBoxRecipes() {
+        List<ShapelessRecipe> shulkerRecipes = new ArrayList<>();
+        // Add all recipes for dyed shulker boxes to dyed shulker boxes
+        for (DyeColor dyeColorFromBox: DyeColor.values()) {
+            for (DyeColor dyeColorToBox: DyeColor.values()) {
+                if (dyeColorFromBox == dyeColorToBox) {
+                    continue;
+                }
+                ItemStack toBox = new ItemStack(Material.valueOf(dyeColorToBox + "_SHULKER_BOX"));
+                ShapelessRecipe shulkerRecipe = new ShapelessRecipe(new NamespacedKey(
+                        automaticCraftingTable,
+                        "de.philw.automaticcraftingtable.shulker_box_from_" + dyeColorFromBox.toString().toLowerCase() + "_to_" + dyeColorToBox.toString().toLowerCase()),
+                        toBox);
+                shulkerRecipe.addIngredient(Material.valueOf(dyeColorToBox + "_DYE"));
+                shulkerRecipe.addIngredient(Material.valueOf(dyeColorFromBox + "_SHULKER_BOX"));
+                shulkerRecipes.add(shulkerRecipe);
+            }
+        }
+        // Add all recipes for normal shulker to all dyed shulker boxes
+        for (DyeColor dyeColorToBox: DyeColor.values()) {
+            ItemStack toBox = new ItemStack(Material.valueOf(dyeColorToBox + "_SHULKER_BOX"));
+            ShapelessRecipe shulkerRecipe = new ShapelessRecipe(new NamespacedKey(
+                    automaticCraftingTable,
+                    "de.philw.automaticcraftingtable.shulker_box_from_normal_to_" + dyeColorToBox.toString().toLowerCase()),
+                    toBox);
+            shulkerRecipe.addIngredient(Material.valueOf(dyeColorToBox + "_DYE"));
+            shulkerRecipe.addIngredient(Material.SHULKER_BOX);
+            shulkerRecipes.add(shulkerRecipe);
+        }
+        return shulkerRecipes;
     }
 
     /**

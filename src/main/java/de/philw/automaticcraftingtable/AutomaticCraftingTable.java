@@ -39,7 +39,7 @@ public final class AutomaticCraftingTable extends JavaPlugin {
         }
         if (ConfigManager.isSeparateFromOtherCraftingTables()) {
             ACTBlockUTIL.automaticCraftingTable = this;
-            Bukkit.getPluginManager().registerEvents(new PlaceACTListener(), this);
+            Bukkit.getPluginManager().registerEvents(new PlaceACTListener(this), this);
             Objects.requireNonNull(getCommand("getACT")).setExecutor(new GetACTCommand());
         }
         try {

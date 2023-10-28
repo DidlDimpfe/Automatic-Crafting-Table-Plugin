@@ -6,7 +6,7 @@
 
     <groupId>de.philw</groupId>
     <artifactId>automaticcraftingtable</artifactId>
-    <version>1.4.2</version>
+    <version>1.4.4</version>
     <packaging>jar</packaging>
 
     <name>Automaticcraftingtable</name>
@@ -77,6 +77,11 @@
             <id>placeholderapi</id>
             <url>https://repo.extendedclip.com/content/repositories/placeholderapi/</url>
         </repository>
+<!--        <repository>-->
+<!--            <id>codemc-repo</id>-->
+<!--            <url>https://repo.codemc.org/repository/maven-public/</url>-->
+<!--            <layout>default</layout>-->
+<!--        </repository>-->
     </repositories>
 
     <dependencies>
@@ -98,5 +103,10 @@
             <version>3.0.2</version>
             <scope>compile</scope>
         </dependency>
+<!--        <dependency>-->
+<!--            <groupId>de.tr7zw</groupId>-->
+<!--            <artifactId>item-nbt-api-plugin</artifactId>-->
+<!--            <version>2.12.0</version>-->
+<!--        </dependency>-->
     </dependencies>
 </project>

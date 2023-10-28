@@ -6,13 +6,17 @@ import de.philw.automaticcraftingtable.manager.CraftingTableManager;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
 
+import java.util.Iterator;
+import java.util.Map;
 import java.util.Objects;
 
 public class CraftingTableEditUIListener implements Listener {
@@ -52,13 +56,13 @@ public class CraftingTableEditUIListener implements Listener {
                 empty = false;
             }
         }
-        // If nothing is in a registered craftingTable why saving it? REMOVE!
-        if (empty && craftingTableManager.isCraftingTableRegistered(location)) {
+        // If nothing is in a registered craftingTable why saving it? REMOVE! (only when separate crafting tables is turned off, because when on, we need to differ the normal ones from the acts and the acts have to be remembered in the file)
+        if (empty && craftingTableManager.isCraftingTableRegistered(location) && !ConfigManager.isSeparateFromOtherCraftingTables()) {
             craftingTableManager.removeCraftingTable(location);
             craftingTableManager.saveCraftingTables();
             return;
         }
-        if (empty) {
+        if (empty && !ConfigManager.isSeparateFromOtherCraftingTables()) {
             return;
         }
         // Store the changes
