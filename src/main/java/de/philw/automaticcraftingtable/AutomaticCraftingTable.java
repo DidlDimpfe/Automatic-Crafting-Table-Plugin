@@ -40,7 +40,7 @@ public final class AutomaticCraftingTable extends JavaPlugin {
         if (ConfigManager.isSeparateFromOtherCraftingTables()) {
             ACTBlockUTIL.automaticCraftingTable = this;
             Bukkit.getPluginManager().registerEvents(new PlaceACTListener(this), this);
-            Objects.requireNonNull(getCommand("getACT")).setExecutor(new GetACTCommand());
+            Objects.requireNonNull(getCommand("getACT")).setExecutor(new GetACTCommand(this));
         }
         try {
             craftingTableManager = new CraftingTableManager(this);

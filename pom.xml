@@ -6,7 +6,7 @@
 
     <groupId>de.philw</groupId>
     <artifactId>automaticcraftingtable</artifactId>
-    <version>1.4.4</version>
+    <version>1.4.5</version>
     <packaging>jar</packaging>
 
     <name>Automaticcraftingtable</name>
@@ -107,6 +107,13 @@
 <!--            <groupId>de.tr7zw</groupId>-->
 <!--            <artifactId>item-nbt-api-plugin</artifactId>-->
 <!--            <version>2.12.0</version>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.spigotmc</groupId>-->
+<!--            <artifactId>spigot</artifactId>-->
+<!--            <version>1.19.4-R0.1-SNAPSHOT</version>-->
+<!--            <classifier>remapped-mojang</classifier>-->
+<!--            <scope>provided</scope>-->
 <!--        </dependency>-->
     </dependencies>
 </project>
